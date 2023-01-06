@@ -1,0 +1,216 @@
+openapi: 3.0.0
+info:
+  version: 0.0.0
+  title: Tehtävä 18
+
+
+servers:
+  - url: http://localhost:8081
+    description: The fastest server ever
+
+
+paths:
+  /register:
+    post:
+      summary: Create a new user account
+      requestBody:
+        $ref: '#/components/requestBodies/UserAuthBody'
+      responses:
+        '200':
+          description: Authentication succeeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserAuthSuccess'
+        500:
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserAuthFail'
+
+  /login:
+    post:
+      summary: Login to the user profile
+      requestBody:
+        $ref: '#/components/requestBodies/UserAuthBody'
+      responses:
+        '200':
+          description: Authentication succeeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserLoginResponse'
+              example:
+                hasAccess: true
+                message: Logged in successfully
+        '500':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserLoginResponse'
+              example:
+                hasAccess: false
+                message: Wrong username or password provided
+
+  /profile:
+    put:
+      summary: Update user profile data
+      requestBody:
+        $ref: '#/components/requestBodies/UserData'
+      responses:
+        '200':
+          description: Profile data has been updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataUpdateResponse'
+              example:
+                isSuccess: true
+                message: Data has been saved
+        '500':
+          description: Problems with updating profile data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataUpdateResponse'
+              example:
+                isSuccess: false
+                message: Problems with saving data
+
+    get:
+      summary: Get user profile data
+      responses:
+        '200':
+          description: Profile data has been updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetDataResponse'
+              example:
+                hasAccess: true
+                message: Data has been found
+                result:
+                  username: john_doe
+                  name: John Doe
+                  phone: +358 45 789 123 34
+                  email: John.Doe@mail.fi
+        '500':
+          description: Problems with updating profile data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetDataResponse'
+              example:
+                hasAccess: false
+                message: No data found
+                result: {}
+
+components:
+  schemas:
+    UserAuth:
+      description: User credentials for authorization
+      type: object
+      properties:
+        username:
+          type: string
+          required: true
+        password:
+          type: string
+          required: true
+      example:
+        username: testUsername
+        password: strongPassword
+
+    UserAuthSuccess:
+      description: User credentials are right
+      type: object
+      properties:
+        result:
+          type: string
+          required: true
+      example:
+        result: Username was registered
+
+    UserAuthFail:
+      description: User credentials are wrong
+      type: object
+      properties:
+        result:
+          type: string
+          required: true
+      example:
+        result: Registration failed, try again
+
+    UserLoginResponse:
+      description: User credentials are right or wrong
+      type: object
+      properties:
+        hasAccess:
+          type: boolean
+          required: true
+        message:
+          type: string
+          required: true
+
+    UserData:
+      description: User profile data containing object
+      type: object
+      properties:
+        username:
+          type: string
+          required: true
+        name:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+      example:
+        username: john_doe
+        name: John Doe
+        phone: +358 45 789 123 34
+        email: John.Doe@mail.fi
+
+    DataUpdateResponse:
+      description: Default response for successful or failed data update query
+      type: object
+      properties:
+        isSuccess:
+          type: boolean
+          required: true
+        message:
+          type: string
+          required: true
+
+    GetDataResponse:
+      description: Default response for successful or failed data querying
+      type: object
+      properties:
+        hasAccess:
+          type: boolean
+          required: true
+        message:
+          type: string
+          required: true
+        result:
+          type: array
+          required: true
+
+  requestBodies:
+    UserAuthBody:
+      description: Object with user profile credentials
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserAuth'
+    UserData:
+      description: Object with user profile data, most of them are optional
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserData'
+

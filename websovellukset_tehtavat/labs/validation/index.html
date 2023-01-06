@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lomake-esimerkki</title>
+</head>
+<body>
+<form action = "http://127.0.0.1:8081/process_post" method = "POST">
+    <label>First Name: <input type = "text" name = "first_name" pattern="(^[A-Z])([a-z])*$"></label><br/>
+    <label>Last Name: <input type = "text" name = "last_name" pattern="(^[A-Z])([a-z])*$"></label><br/>
+    <label>Email: <input type = "text" name = "email" pattern="([A-Za-z][A-Za-z0-9._]*)([@])([a-z]*)(.)([a-z]{2,10})"></label><br/>
+    <label>Age: <input type = "text" name = "age" pattern="\b[0-9]\b|\b[1-9][0-9]\b|\b[1-9][0-6][0-9]\b"></label><br/>
+    <input type = "submit" value = "Submit">
+</form>
+</body>
+<style>
+    input{
+        margin-bottom: 10px;
+    }
+    input:invalid {
+        border: 2px dashed red;
+    }
+    input[type="text"]:valid {
+        border: 1px solid lightgreen;
+    }
+</style>
+</html>

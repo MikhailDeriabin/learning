@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue basics</title>
+    <script src="vue/vue.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id="app">
+        <div class="taskWrapper">
+            <h1>Tehtävä 1</h1>
+            <p class="task">
+                Toteuta Vue:n Hello world -sovellus, mutta kuitenkin siten, että käyttäjä pääsee
+                muokkaamaan tulostetta (input-kentän avulla)
+            </p>
+            <div class="answer">
+                <label>
+                    Type something
+                    <input v-model="userInput" type="text"/>
+                </label>
+                <p>{{ userInput }}</p>
+            </div>
+        </div>
+
+        <div class="taskWrapper">
+            <h1>Tehtävä 2</h1>
+            <p class="task">
+            Jatka tehtävä loppun asti, eli nappulasta painaen teksti menee joko piiloon taikka
+            tulee näkyviin
+            </p>
+            <div class="answer">
+                <span v-if="seen">Now you see me</span>
+                <button v-on:click="Vaihda">Näytä/Piilota</button>
+            </div>
+        </div>
+
+        <div class="taskWrapper">
+            <h1>Tehtävä 3</h1>
+            <p class="task">
+                205CDE:n Lab 10:ssä on tehtävä, jossa muokataan function_closure.html-nimistä
+                tiedostoa siten, että siihen saadaan laskuri, jossa on napit ’+’, ’0’ ja ’-’. Toteuta nyt
+                vastaava toiminto Vuen avulla. Tarvitset methods-osaa ja sinne lisättyjä funktioita.
+            </p>
+            <div class="answer">
+                <div id="btn-wrapper">
+                    <button id="lower-speed-btn" v-on:click="reduceSpeed" v-bind:disabled="speed<=0">-</button>
+                    <button id="zero-speed-btn" v-on:click="stop" v-bind:disabled="speed<=0">0</button>
+                    <button id="higher-speed-btn" v-on:click="increaseSpeed">+</button>
+                </div>
+                <div id="playback-speed">Current playback speed: {{ speed }}</div>
+            </div>
+        </div>
+
+        <div class="taskWrapper">
+            <h1>Tehtävä 4</h1>
+            <p class="task">
+                Tee luettelo, jossa voi olla jo alkioita oletusarvoisesti (ei välttämättä) ja johon käyttäjä
+                voi lisätä alkioita. Lista voi olla vaikkapa jonkinlainen todo-lista tms...
+            </p>
+            <div class="answer">
+                <div>
+                    <label>
+                        Add a task:
+                        <input v-model="newTodo" type="text" placeholder="type todo"/>
+                    </label>
+                    <button v-on:click="addTodo" v-bind:disabled="newTodo===''">add</button>
+                    <ul>
+                        <li v-for="todo in todoList"> {{ todo }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="taskWrapper">
+            <h1>Tehtävä 5</h1>
+            <p class="task">
+                Lisää tehtävään 1 laskuri, joka laskee syöttämäsi merkkijonon pituuden samalla kun
+                kirjoitat. (tämä onnistuu käyttämällä computed-ominaisuutta methods:n sijaan)
+            </p>
+            <div class="answer">
+                <label>
+                    Type something
+                    <input v-model="userInput" type="text"/>
+                    {{ userInput.length }}
+                </label>
+                <p>{{ userInput }}</p>
+            </div>
+        </div>
+
+        <div class="taskWrapper">
+            <h1>Tehtävät 6 ja 7</h1>
+            <p class="task">
+                6:Listasta pitää myös joskus voida poistaa asioita. Toteuta nyt listaan ominaisuus, joka
+                poistaa listan ylimmän alkion, tähän tyyliin Listasta pitääkin poistaa tietty alkio
+            </p>
+            <p class="task">
+                7: Listasta pitääkin poistaa tietty alkio
+            </p>
+            <div class="answer">
+                <div>
+                    <label>
+                        <input v-model="newUser" type="text" placeholder="type username"/>
+                    </label>
+                    <button v-on:click="addUser" v-bind:disabled="newUser===''">Add User</button>
+                    <button v-on:click="removeFirstUser" v-bind:disabled="users.length === 0">Delete User</button>
+                    <ul>
+                        <template v-for="(user, index) in users">
+                            <li> {{ user }} <button v-on:click="deleteUserByIndex(index)">Delete User</button></li>
+
+                        </template>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+<style>
+    .taskWrapper{
+        margin: 30px 0;
+        padding: 10px 20px;
+        border: 1px solid black;
+        font-size: 20px;
+    }
+    .task{
+        font-style: italic;
+    }
+    .answer{
+        padding: 5px;
+        border: 3px dotted lightgreen;
+    }
+</style>
+<script src="vue_basics.js" type="text/javascript"></script>
+</html>

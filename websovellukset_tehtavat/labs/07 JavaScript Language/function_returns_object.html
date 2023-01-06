@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Object-o-matic</title>
+  <script>
+	function makeCar() {
+      const makes = ["Chevy", "GM", "Fiat", "Webville Motors", "Tucker"];
+      const models = ["Cadillac", "500", "Bel-Air", "Taxi", "Torpedo"];
+      const years = [1955, 1957, 1948, 1954, 1961];
+      const colors = ["red", "blue", "tan", "yellow", "white"];
+      const convertible = [true, false];
+
+      const rand1 = Math.floor(Math.random() * makes.length);
+      const rand2 = Math.floor(Math.random() * models.length);
+      const rand3 = Math.floor(Math.random() * years.length);
+      const rand4 = Math.floor(Math.random() * colors.length);
+      const rand5 = Math.floor(Math.random() * 5);
+      const rand6 = Math.floor(Math.random() * 2);
+
+      const engine = makeEngine();
+
+      const car = {
+        make: makes[rand1],
+        model: models[rand2],
+        year: years[rand3],
+        color: colors[rand4],
+        passengers: rand5,
+        convertible: convertible[rand6],
+        mileage: 0,
+        engine: engine
+      };
+		return car;
+	}
+
+    function makeEngine(){
+      const cylinderCountMin = 4, cylinderCountMax = 8;
+      const ccVolumeCountMin = 0.5, ccVolumeCountMax = 5.0;
+      const fuelType = ["diesel", "gasoline", "gas", "electric"];
+      const maxTorqueMin = 50, maxTorqueMax = 150;
+
+      const cylinderCount = Math.floor(Math.random() * (cylinderCountMax - cylinderCountMin) + cylinderCountMin);
+      const ccVol = Math.random() * (ccVolumeCountMax - ccVolumeCountMin) + ccVolumeCountMin;
+      const fuel = fuelType[Math.floor(Math.random() * fuelType.length)];
+      const torque = Math.random() * (maxTorqueMax - maxTorqueMin) + maxTorqueMin;
+
+      const engine = {
+        cylinderCount: cylinderCount,
+        ccVol: ccVol,
+        fuel: fuel,
+        torque: torque
+      };
+
+      return engine;
+    }
+
+	function displayCar(car) {
+		console.log("Your new car is a " + car.year + " " + car.make + " " + car.model);
+        console.log("Car's engine:");
+        console.log("cylinders: " + car.engine.cylinderCount);
+        console.log("cc: " + car.engine.ccVol);
+        console.log("fuel: " + car.engine.fuel);
+        console.log("torque: " + car.engine.torque);
+	}
+
+	const carToSell = makeCar();
+	displayCar(carToSell);
+
+  </script>
+</head>
+<body></body>
+</html>

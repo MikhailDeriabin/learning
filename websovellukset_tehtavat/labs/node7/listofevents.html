@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fin">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .container {
+            border: 1px solid black;
+            padding: 25px;
+        }
+        body {
+            background-color: antiquewhite;
+        }
+        #result{
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid red;
+        }
+    </style>
+    <title>List of events</title>
+</head>
+<body>
+<form role="form">
+    <div class="container" id="wholeContainer">
+        <h1>Syötä päivämääräväli</h1>
+
+        <div class="controls form-inline">
+            <div class="form-group">
+                <label for="startingDate">Alkupäivämäärä:</label>
+                <input type="date" class="form-control" id="startingDate" name="startingDate"/>
+            </div>
+
+            <div class="form-group">
+                <label for="endingDate">Loppupäivämäärä:</label>
+                <input type="date" class="form-control" id="endingDate" name="endingDate"/>
+            </div>
+        </div>
+
+        <div id="locationInfo" class="controls form-inline">
+
+        </div>
+        <input type="submit" value="Lähetä">
+    </div>
+</form>
+
+<div id="result"></div>
+
+</body>
+<script src="/listofeventsClient.js" type="text/javascript"></script>
+</html>

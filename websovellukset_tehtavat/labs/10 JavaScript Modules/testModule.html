@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="moduleTest">
+        This is a test div, which should be red
+    </div>
+</body>
+<script type="module">
+    import * as $ from './$.js';
+    const moduleTestDiv = $.id("moduleTest");
+    moduleTestDiv.style.backgroundColor = "red";
+    const notExistDiv = $.id("divId");
+</script>
+</html>

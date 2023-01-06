@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Coffee Constructor</title>
+<script>
+
+function Coffee(roast, ounces) {
+	this.roast = roast;
+	this.ounces = ounces;
+	this.getSize = function() {
+		if (this.ounces === 8) {
+			return "small";
+		} else if (this.ounces === 12) {
+			return "medium";
+		} else if (this.ounces === 16) {
+			return "large";
+		}
+	};
+	this.order = function() {
+		var msg;
+		switch (this.getSize()) {
+			case "small":
+			case "medium":
+			case "large":
+				msg = "You've ordered a " + this.getSize() + " " + this.roast + " coffee.";
+				break;
+			default:
+				msg = "We don't have a " + this.roast + " in that size!";
+				break;
+		}
+		return msg;
+	};
+}
+
+function Tea(type, ounces){
+    this.type = type;
+    this.ounces = ounces;
+    this.getSteepTime = () => {
+        switch(this.type){
+            case "black":
+                return 2;
+            case "green":
+                return 3;
+            case "white":
+               return 4;
+            default:
+                return -1;
+        }
+    }
+    this.order = () => {
+        var msg;
+        switch (this.type) {
+            case "black":
+            case "green":
+            case "white":
+                msg = "You've ordered a " + this.ounces + " ounces of " + this.type + " tea" + ", please wait " + this.getSteepTime() + " min for tea steeping" ;
+                break;
+            default:
+                msg = "We don't have a " + this.type + " tea";
+                break;
+        }
+        return msg;
+    }
+}
+
+Coffee.prototype.sip = () => {
+    console.log("Hmm, tasty coffee");
+}
+Tea.prototype.sip = () => {
+    console.log("Hmm, tasty tea");
+}
+
+var coffee = new Coffee("House Blend", 12);
+console.log(coffee.order());
+
+var darkRoast = new Coffee("Dark Roast", 16);
+console.log(darkRoast.order());
+
+var specialBlend = new Coffee("Special Blend", 200);
+console.log(specialBlend.order());
+
+const blackTea = new Tea("black", 1);
+console.log(blackTea.order());
+const greenTea = new Tea("green", 2);
+console.log(greenTea.order());
+const whiteTea = new Tea("white", 3);
+console.log(whiteTea.order());
+const yellowTea = new Tea("yellow", 4);
+console.log(yellowTea.order());
+
+coffee.sip();
+blackTea.sip();
+
+</script>
+</head>
+<body>
+</body>
+</html>
+

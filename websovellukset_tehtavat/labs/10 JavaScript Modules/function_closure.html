@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Click me!</title>
+<style> 
+	body, button { margin: 10px; } 
+	div { padding: 10px; }
+</style>
+<script>
+
+/*
+//
+// The version without the closure...
+//
+var count = 0;
+window.onload = function() {
+	var button = document.getElementById("clickme");
+	button.onclick = handleClick;
+};
+
+function handleClick() {
+	var message = "You clicked me ";
+	var div = document.getElementById("message");
+	count++;
+	div.innerHTML = message + count + " times!";
+}
+*/
+
+//
+// The version with the closure.
+//
+window.onload = function() {
+	var count = 0; 
+	var message = "You clicked me ";
+	var div = document.getElementById("message");
+
+	var button = document.getElementById("clickme");
+	button.onclick = function() {
+		count++;
+		div.innerHTML = message + count + " times!";
+	};
+
+	const btnWrapper = document.querySelector("#btn-wrapper");
+	const lowerSpeedBtn = btnWrapper.querySelector("#lower-speed-btn");
+	const zeroSpeedBtn = btnWrapper.querySelector("#zero-speed-btn");
+	const higherSpeedBtn = btnWrapper.querySelector("#higher-speed-btn");
+	const playbackSpeedDiv = document.querySelector("#playback-speed");
+	let playbackSpeed = 0;
+
+	lowerSpeedBtn.addEventListener("click", () => speedSetting(-1));
+	zeroSpeedBtn.addEventListener("click", () => speedSetting(0));
+	higherSpeedBtn.addEventListener("click", () => speedSetting(1));
+
+	function speedSetting(changeValue){
+		if(changeValue < 0 && playbackSpeed > 0)
+			playbackSpeed += changeValue;
+		else if(changeValue > 0)
+			playbackSpeed += changeValue;
+		else if(changeValue === 0)
+			playbackSpeed = 0;
+		playbackSpeedDiv.textContent = playbackSpeed;
+	}
+};
+
+</script> 
+</head> 
+<body>
+	<button id="clickme">Click me!</button>
+	<div id="message"></div>
+	<div id="btn-wrapper">
+		<button id="lower-speed-btn">-</button>
+		<button id="zero-speed-btn">0</button>
+		<button id="higher-speed-btn">+</button>
+	</div>
+	<div id="playback-speed">0</div>
+</body>
+</html>
+

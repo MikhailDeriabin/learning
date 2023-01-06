@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+	<div id="summary">
+		<h1 id="nameH" data-input="nameInput"></h1>
+		<p id="emailP" data-input="emailInput"></p>
+		<p id="passwordP" data-input="passwordInput"></p>
+	</div>
+	<div id="userForm">
+		<p><input id="nameInput" type="text" placeholder="Name" /></p>
+		<p><input id="emailInput" type="email" placeholder="Email" /></p>
+		<p><input id="passwordInput" type="password" placeholder="Password" /></p>
+	</div>
+	<div id="eventsDiv">
+		<label for="keydownInput"l>On keydown event: </label>
+		<input id="keydownInput" type="text" placeholder="on keydown"/><br/>
+		<label for="keyupInput">On keyup event: </label>
+		<input id="keyupInput" type="text" placeholder="on keyup"/><br/>
+		<label for="mouseoverInput">On mouseover event: </label>
+		<input id="mouseoverInput" type="text" placeholder="on mouseover"/><br/>
+		<label for="mouseoutInput">On mouseout event: </label>
+		<input id="mouseoutInput" type="text" placeholder="on mouseout"/><br/>
+		<label for="changeInput">On change event: </label>
+		<input id="changeInput" type="text" placeholder="on change"/><br/>
+		<label for="clickInput">On click event: </label>
+		<input id="clickInput" type="text" placeholder="on click"/><br/>
+		<p id="resultP"></p>
+	</div>
+</body>
+<script src="js/simple_dom.js"></script>
+<style>
+	#eventsDiv input[type="text"]{
+		margin: 20px;
+	}
+
+	#resultP{
+		width: 300px;
+		padding: 30px;
+
+		border: 2px solid red;
+
+		text-align: center;
+		font-weight: bold;
+		font-size: 20px;
+	}
+</style>
+</html>

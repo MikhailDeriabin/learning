@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title> JSON </title>
+  <script>
+
+var fidoString = '{ "name": "Fido", "breed": "Mixed", "weight": 38 }';
+var fido = JSON.parse(fidoString);
+console.log("We have made a dog out of a string! " + fido.name);
+
+
+var fido2 = {
+	name: "Fido",
+	breed: "Mixed",
+	weight: 38
+};
+var fidoString = JSON.stringify(fido2);
+console.log("We made a string from a dog! " + fidoString);
+
+
+window.onload = () => {
+  const firstTaskDiv = document.querySelector("#firstTaskDiv");
+  const secondTaskDiv = document.querySelector("#secondTaskDiv");
+
+  const employee = {
+    name: {
+      first: "Colin",
+      second: "Stephen"
+    },
+    title: "Assistant Lecturer"
+  }
+  const jsStr = JSON.stringify(employee);
+  firstTaskDiv.textContent = jsStr;
+
+  const newObj = JSON.parse(jsStr);
+  let emplName = newObj.name;
+  secondTaskDiv.innerHTML = "Firstname: " + emplName.first + "<br/>Second name: " + emplName.second;
+
+}
+  </script>
+</head>
+<body>
+  <div id="taskWrapperDiv">
+    <h3>Json string:</h3>
+    <div id="firstTaskDiv"></div>
+    <h3>Json object:</h3>
+    <div id="secondTaskDiv"></div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,16 @@
+body{
+    display: flex;
+    justify-content: space-around;
+
+    padding: 20px 0;
+
+    font-size: 20px;
+}
+
+.noteWrapper{
+    margin: 10px 0;
+}
+
+.removeNoteBtn{
+    margin-left: 10px;
+}

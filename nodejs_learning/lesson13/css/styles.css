@@ -1,0 +1,7 @@
+main > *:not(h1){
+    font-size: 20px;
+}
+
+footer{
+    font-weight: bold;
+}

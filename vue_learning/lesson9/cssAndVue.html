@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSS and Vue</title>
+    <script src="/vue.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id="app">
+        <div>
+            <div>
+                <p v-bind:style="{backgroundColor: pBgColor}">Some text</p>
+                <button v-on:click="changePBgColor">change p bg-color</button>
+            </div>
+
+            <div>
+                <p v-bind:style="{fontSize: pFontSize+'px'}">Another text</p>
+                <button v-on:click="increasePFontSize">increase font size</button>
+            </div>
+
+            <div>
+                <p v-bind:style="[style1, style2]">2 styles</p>
+            </div>
+        </div>
+    </div>
+</body>
+<style>
+    div:not(#app){
+        margin-bottom: 20px;
+        font-size: 20px;
+        border: 1px solid black;
+    }
+</style>
+<script src="cssAndVue.js" type="text/javascript"></script>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Advanced Methods</title>
+    <script src="/vue.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id="app">
+        <div>
+        <p> {{ message }} </p>
+        <button v-on:click="showMessage('Hello')">Say hello</button>
+        <button v-on:click="showMessage('Goodbye')">Say goodbye</button>
+        </div>
+
+        <div>
+            <ul>
+                <li v-for="(item, i) in items" v-on:click="removeItem(i)"> {{ item }} </li>
+            </ul>
+        </div>
+
+        <div>
+            <ul>
+                <li v-for="(num, index) in nums" v-on:click="showSquare(index)"> {{ num }} </li>
+            </ul>
+        </div>
+    </div>
+</body>
+<style>
+    div{
+        margin-bottom: 20px;
+        font-size: 20px;
+    }
+</style>
+<script src="advancedMethods.js" type="text/javascript"></script>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HTML Attributes</title>
+    <script src="/vue.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id="app">
+        <div>
+            <p v-bind:id="pId">Some text</p>
+        </div>
+
+        <div>
+            <button v-bind:disabled="isButtonDisabled" v-on:click="showClick">button</button>
+        </div>
+
+        <div>
+            <p v-bind:class="multiClass">This p has multiple classes</p>
+        </div>
+
+        <div>
+            <label>
+                Select p color
+                <select v-model="pColor">
+                    <option>white</option>
+                    <option>red</option>
+                    <option>yellow</option>
+                </select>
+            </label>
+            <p v-bind:class="{white: pColor==='white', red: pColor==='red', yellow: pColor==='yellow'}">some text</p>
+        </div>
+
+        <div>
+            <p v-bind:class="someClasses">Another text</p>
+        </div>
+
+    </div>
+</body>
+<style>
+    div:not(#app){
+        margin-bottom: 20px;
+        border: 1px solid black;
+        font-size: 20px;
+    }
+
+    #redP{
+        background-color: red;
+    }
+
+    .class1{
+        background-color: black;
+    }
+    .class2{
+        color: white;
+    }
+
+    .white{
+        background-color: white;
+    }
+    .red{
+        background-color: red;
+    }
+    .yellow{
+        background-color: yellow;
+    }
+</style>
+<script src="htmlAttributes.js" type="text/javascript"></script>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Conditions</title>
+    <script src="/vue.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id="app">
+        <div>
+            <!-- v-if based on the variable show hide or show the element (true - show, false - hide) -->
+            <p v-if="show">1. simple paragraph</p>
+            <p v-if="!show">2. simple paragraph</p>
+        </div>
+
+        <div>
+            <p v-if="isDisplayed">Some text</p>
+            <button v-on:click="toggleVisibility"> {{ buttonText }} </button>
+        </div>
+
+        <div>
+            <p v-if="isDisplayed1">Another text</p>
+            <button v-on:click="toggleVisibility1"> {{ isDisplayed1 ? "hide text" : "show text" }} </button>
+        </div>
+
+        <div>
+            <template v-for="(text, index) in textArr">
+                <p v-if="showTextPar[index]"> {{ text }} </p>
+                <button v-on:click="toggleParVis(index)"> {{ showTextPar[index] ? "hide" : "show" }}</button>
+                <br/>
+            </template>
+        </div>
+
+        <div>
+            <p v-if="isGreeting">Hello {{ personName }}</p>
+            <p v-else>Bye {{ personName }}</p>
+        </div>
+
+        <div>
+            <p v-if="age < 18"> {{personName + " is young"}} </p>
+            <p v-else-if="age >= 18 && age < 40"> {{personName + " is middle age"}} </p>
+            <p v-else-if="age >= 40"> {{personName + " is old"}} </p>
+            <p v-else>Age not found</p>
+        </div>
+    </div>
+</body>
+<style>
+    div:not(#app){
+        margin-bottom: 20px;
+        font-size: 20px;
+        border: 1px solid black;
+    }
+</style>
+<script src="conditions.js" type="text/javascript"></script>
+</html>

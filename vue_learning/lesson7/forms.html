@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Forms</title>
+    <script src="/vue.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id="app">
+        <div>
+            <!-- v-module = value -->
+            <input v-model="message">
+            <p>Your input: {{ message }}</p>
+        </div>
+
+        <div>
+            <input type="number" v-model="userNum">
+            <button v-on:click="getSquare">get a square</button>
+            <p>Square: {{ squareNum }}</p>
+        </div>
+
+        <div>
+            <input type="text" v-model="userInput1">
+            <button v-on:click="moveInputMsg"> {{ isInLeftInput ? "->" : "<-" }} </button>
+            <input type="text" v-model="userInput2">
+        </div>
+
+        <div>
+            <input type="text" v-model="userInput" placeholder="Firstname Lastname">
+            <button v-on:click="savePersonName">save</button>
+            <p>Firstname: {{ firstname }}</p>
+            <p>Lastname: {{ lastname }}</p>
+        </div>
+
+        <div id="todolist">
+            <div>
+                <p>Tasks for today:</p>
+                <input v-model="newTask" type="text" placeholder="type a new task">
+                <button v-on:click="addTask">add</button>
+                <ul>
+                    <li v-for="(task, i) in tasks">{{ task }} <button v-on:click="removeTask(i)">X</button></li>
+                </ul>
+            </div>
+            <div>
+                <p>Done tasks:</p>
+                <ul>
+                    <li v-for="task in doneTasks"> {{ task }} </li>
+                </ul>
+            </div>
+        </div>
+
+        <div>
+            <label>
+                <input v-model="lang" type="checkbox" value="html"/> html
+            </label>
+            <label>
+                <input v-model="lang" type="checkbox" value="css"/> css
+            </label>
+            <label>
+                <input v-model="lang" type="checkbox" value="js"/> js
+            </label>
+            <p>Chosen values: <span v-for="val in lang">{{ val }}, </span></p>
+        </div>
+
+        <div>
+            <label>
+                <input v-model="answer" name="variants" type="radio" value="first variant"/>
+                First variant
+            </label>
+            <label>
+                <input v-model="answer" name="variants" type="radio" value="second variant"/>
+                Second variant
+            </label>
+            <label>
+                <input v-model="answer" name="variants" type="radio" value="third variant"/>
+                Third variant
+            </label>
+
+            <p>Your answer: {{ answer }}</p>
+        </div>
+
+        <div>
+            What is your mother language?<br/>
+            <label>
+                <input v-model="motherLang" name="userLang" type="radio" value="en"/>
+                English
+            </label><br/>
+            <label>
+                <input v-model="motherLang" name="userLang" type="radio" value="fi"/>
+                Suomi
+            </label><br/>
+            <label>
+                <input v-model="motherLang" name="userLang" type="radio" value="ge"/>
+                Deutsch
+            </label><br/>
+
+            <p v-if="motherLang === 'en'">Good afternoon!</p>
+            <p v-else-if="motherLang === 'fi'">Hyvää päivää!</p>
+            <p v-else-if="motherLang === 'ge'">Guten Tag!</p>
+        </div>
+
+        <div>
+            <p>Where do you live?</p>
+            <select v-model="town">
+                <option v-for="town in townList">{{ town }}</option>
+            </select>
+            <p>You are living in the {{ town }}</p>
+        </div>
+
+    </div>
+</body>
+<style>
+    div:not(#app){
+        margin-bottom: 20px;
+        border: 1px solid black;
+        font-size: 20px;
+    }
+
+    #todolist{
+        display: flex;
+        justify-content: space-between;
+        width: 600px;
+        padding: 20px 30px;
+    }
+    #todolist > div{
+        border: none;
+    }
+</style>
+<script src="forms.js" type="text/javascript"></script>
+</html>

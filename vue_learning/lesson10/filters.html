@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Filters</title>
+    <script src="/vue.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id="app">
+        <div>
+            <p>{{ message | capitalize }}</p>
+        </div>
+
+        <div>
+            <p>{{ message | uppercase }}</p>
+        </div>
+
+        <div>
+            <p>{{ sentence | capitalizeWords }}</p>
+        </div>
+
+        <div>
+            <p>{{ weekNum | getWeekDay }}</p>
+        </div>
+
+        <div>
+            <p v-bind:class="'par' | makeAbsolutePos">p with absolute position</p>
+        </div>
+    </div>
+</body>
+<style>
+    div:not(#app){
+        margin-bottom: 20px;
+        font-size: 20px;
+        border: 1px solid black;
+    }
+
+    .par-absolute{
+        position: absolute;
+        top: 30px;
+        left: 100px;
+        background-color: red;
+    }
+</style>
+<script src="filters.js" type="text/javascript"></script>
+</html>

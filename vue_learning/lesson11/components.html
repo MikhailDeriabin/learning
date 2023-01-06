@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Components</title>
+    <script src="/vue.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id="app">
+        <my-component></my-component>
+        <!-- in html you must use kebab-case not camelCase attributes -->
+        <name v-for="val in nameValues"
+              v-bind:person-name="val.name"
+              v-bind:weather="val.weather">
+        </name>
+    </div>
+</body>
+<style>
+    div:not(#app){
+        margin-bottom: 20px;
+        font-size: 20px;
+        border: 1px solid black;
+    }
+</style>
+<script src="components.js" type="text/javascript"></script>
+</html>

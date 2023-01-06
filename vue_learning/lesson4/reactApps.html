@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>React apps</title>
+    <script src="/vue.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id="app">
+        <p>{{ message }}</p>
+        <button v-on:click="changeMessage">change message</button>
+        <div>
+            <ul>
+                <li v-for="todo in todoList"> {{ todo }} </li>
+            </ul>
+            <div>
+                <button v-on:click="addTodo">+</button>
+                <button v-on:click="removeFirstTodo">- first</button>
+                <button v-on:click="removeLastTodo">- last</button>
+            </div>
+        </div>
+    </div>
+</body>
+<style>
+    div{
+        margin-bottom: 20px;
+        font-size: 20px;
+    }
+</style>
+<script src="reactApps.js" type="text/javascript"></script>
+</html>

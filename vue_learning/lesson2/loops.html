@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Loops</title>
+    <script src="/vue.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id="app">
+        <ul>
+            <!-- loop the array arr, instead  of num any variables can be used -->
+            <li v-for="num in arr"> {{ num }} </li>
+        </ul>
+        <ul>
+            <!-- loop the array users, instead  of user and i any variables can be used -->
+            <li v-for="(user, i) in users"> {{ user + " has an index " + i}} </li>
+        </ul>
+        <ul>
+            <!-- loop the object employees, instead  of value, key and i any variables can be used -->
+            <li v-for="(value, key, i) in employees"> {{ key + " has salary " + value + " and index " + i}} </li>
+        </ul>
+
+        <ul>
+            <li v-for="href in hrefs"><a href="/href/">{{ href.text }}</a></li>
+        </ul>
+        <ul>
+            <li v-for="product in products">{{product.name + ", quantity: " + product.quantity + ", total price: " + (product.quantity*product.price)}}</li>
+        </ul>
+
+        <!-- elems in tag template will be generated in one iteration and then template tag will be removed  -->
+        <ul>
+            <template v-for="elem in elems">
+            <li > {{ elem.name + " is " + elem.property}} </li>
+            <li>lol</li>
+            <li class="divider"></li>
+            </template>
+        </ul>
+    </div>
+</body>
+<style>
+    div{
+        margin-bottom: 20px;
+        font-size: 20px;
+    }
+    ul{
+        margin-bottom: 10px;
+    }
+
+    .divider{
+        background-color: red;
+    }
+</style>
+<script src="loops.js" type="text/javascript"></script>
+</html>

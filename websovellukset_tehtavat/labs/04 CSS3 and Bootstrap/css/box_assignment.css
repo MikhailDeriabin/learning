@@ -1,0 +1,62 @@
+*{
+    margin: 0;
+    padding: 0;
+    border: none;
+
+    font-family: Arial, sans-serif;
+    font-weight: normal;
+}
+
+body{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h1{
+    font-size: 103px;
+    font-weight: lighter;
+    margin-bottom: 17px;
+}
+
+figure{
+    margin-bottom: 55px;
+}
+
+figure img{
+    margin-bottom: 12px;
+}
+
+figcaption, figcaption > span{
+    font-weight: bold;
+}
+
+.italic_text{
+    font-style: italic;
+}
+
+.berries-wrapper{
+    width: 256px;
+    margin: 0 auto;
+}
+
+.berry-info{
+    padding: 26px 0;
+    border-top: 1px solid #3D434B;
+    border-bottom: 1px solid #3D434B;
+}
+
+.berry-info:nth-of-type(1){
+    background-color: #C6D9F1;
+}
+
+.berry-info:nth-of-type(2){
+    background-color: #FDE9D9;
+}
+
+.berry-info:nth-of-type(3){
+    background-color: #D99594;
+}
+
+.berry-eng-name{
+    font-size: 36px;
+}

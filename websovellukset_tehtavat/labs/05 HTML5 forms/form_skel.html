@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+	<!--
+	This page demonstrates a form.
+	-->
+	<head>
+		<meta charset="utf-8"/>
+		<title>Demonstrating HTML forms</title>
+		<link href="form_skel.css" type="text/css" rel="stylesheet" />
+	</head>
+	
+	<body>
+
+		<h1>Turnitin</h1>
+
+		<form  lang="fi" action="">
+			<fieldset>
+				<legend>Exercise</legend>
+				<div class="row-input required-field-wrapper">
+					<label for="name">Name: </label>
+					<input type="text" id="name" name="student_name" title="Etunimi Sukunimi" placeholder="Firstname Surname" oninvalid="this.setCustomValidity('Laita nimesi Etunimi Sukunimi muodossa')" pattern="([A-Z])\w*\s([A-Z])\w*\s*" required/>
+					<span class="required-field-marker">*</span>
+				</div>
+				<div class="row-input required-field-wrapper">
+					<label for="id">Student id: </label>
+					<input type="text" id="id" name="id"  title="1234567" placeholder="1234567" oninvalid="this.setCustomValidity('Laita opiskelija numero 1234567 muodossa')" pattern="\d{7,7}" required/>
+					<span class="required-field-marker">*</span>
+				</div>
+				<div class="row-input required-field-wrapper">
+					<label for="email">Email: </label>
+					<input type="email" id="email" name="email" title="posti@gmail.com" placeholder="mail@gmail.com" oninvalid="this.setCustomValidity('Laita sähköpostiosoite posti@posti.com muodossa')" required/>
+					<span class="required-field-marker">*</span>
+				</div>
+				<div class="row-input">
+					<label for="assignment">Assignment: </label>
+					<input type="text" id="assignment" name="assignment" title="Tehtävän nimi" placeholder="Assigment name"/>
+				</div>
+				<div>
+					<label for="code" title="tehtävän koodi">Code:</label><br/>
+					<textarea id="code" name="code" title="tehtävän koodi" placeholder="let i=0"></textarea>
+				</div>
+			</fieldset>
+
+			<div>
+				<fieldset id="cheats">
+					<legend title="käytetyt huijaukset">Cheat</legend>
+					<input type="checkbox" id="cheat1" name="cheat1" value="cheat1" />
+					<label for="cheat1"> Cheat 1</label><br/>
+					<input type="checkbox" id="cheat2" name="cheat2" value="cheat2" />
+					<label for="cheat2"> Cheat 2</label><br/>
+					<input type="checkbox" id="cheat3" name="cheat3" value="cheat3" />
+					<label for="cheat3"> Cheat 3</label>
+				</fieldset>
+			</div>
+
+			<div>
+				<fieldset id="payment_methods">
+					<legend title="maksutapa">Payment method</legend>
+					<input type="radio" id="visa" name="payment_method" value="visa" checked/>
+					<label for="visa"> Visa</label><br>
+					<input type="radio" id="paypal" name="payment_method" value="paypal" />
+					<label for="paypal"> Paypal</label><br>
+					<input type="radio" id="mastercard" name="payment_method" value="mastercard" />
+					<label for="mastercard"> Mastercard</label><br>
+				</fieldset>
+			</div>
+
+			<div>
+				<label for="score" title="pisteet tehtävästä">Score:</label>
+				<select name="score" id="score" title="pisteet tehtävästä">
+					<option value="1">1 point</option>
+					<option value="2">2 points</option>
+					<option value="3">3 points</option>
+					<option value="4">4 points</option>
+					<option value="5">5 points</option>
+				</select>
+			</div>
+
+			<input type="submit" title="lähetä"/>
+		</form>
+		<p>* required</p>
+
+		<a href="http://jigsaw.w3.org/css-validator/check/referer">Validate</a>
+
+	</body>
+</html>

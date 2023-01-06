@@ -1,0 +1,29 @@
+*{
+    font-size: 20px;
+}
+
+.bold_text{
+    font-weight: bold;
+}
+
+img{
+    max-width: 200px;
+    float: left;
+    margin: 0 30px 30px 0;
+}
+
+div{
+    margin-bottom: 40px;
+}
+
+table{
+    collapse: collapse;
+    border-spacing: 10px;
+}
+table, table > *, tr{
+    border: 1px solid black;
+}
+
+.contact{
+    color: #6c615c;
+}

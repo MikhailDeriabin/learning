@@ -1,0 +1,51 @@
+form{
+    position: relative;
+    max-width: 40%;
+}
+
+div{
+    margin-bottom: 20px;
+}
+
+fieldset{
+    margin-bottom: 50px;
+}
+
+.row-input{
+    display: flex;
+    justify-content: space-between;
+
+    max-width: 65%;
+}
+
+.required-field-wrapper{
+    position: relative;
+}
+
+.required-field-marker{
+    position: absolute;
+    right: -15px;
+
+    line-height: 30px;
+    font-size: 20px;
+    color: red;
+}
+
+input[required]{
+    border: 1px solid red;
+}
+input[type="submit"]{
+    position: absolute;
+    right: 20px;
+    bottom: 0;
+
+    font-size: 20px;
+    background-color: red;
+    color: white;
+}
+
+#code{
+    margin: 10px auto 0 auto;
+    width: 96%;
+    height: 300px;
+}

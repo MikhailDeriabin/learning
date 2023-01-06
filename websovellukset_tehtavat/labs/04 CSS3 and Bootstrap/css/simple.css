@@ -1,0 +1,40 @@
+/*
+Add a border around each list and change the color of list items to dark grey.
+Indent the paragraphs and lists.
+Make figure captions smaller and use bold face.
+Set a background color for the page.
+*/
+body {
+    background-color: yellow;
+
+    font-family: Arial, Verdana, sans-serif;
+}
+
+h1, h2 {
+    color: blue;
+    font-weight: bold;
+}
+
+ul, ol, dl{
+    border: 1px solid black;
+}
+
+li, dd, dt{
+    background-color: darkgrey;
+}
+
+ul, ol, dl, p:not(.codeP){
+    text-indent: 10px;
+}
+
+figcaption{
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.codeP{
+    padding: 20px 30px;
+
+    background-color: #1b1d26;
+    color: white;
+}

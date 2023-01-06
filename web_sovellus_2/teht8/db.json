@@ -1,0 +1,19 @@
+{
+  "notes": [
+    {
+      "id": 1,
+      "content": "Some note",
+      "date": "29.7.2022"
+    },
+    {
+      "id": 2,
+      "content": "Some event",
+      "date": "29.8.2022"
+    },
+    {
+      "content": "30.09 Antin synttärit",
+      "date": "31.8.2022",
+      "id": 3
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE products[
+        <!ELEMENT products (item*)>
+        <!ELEMENT item (name,price,description?,count?,category?)>
+        <!ATTLIST item itemId ID #REQUIRED>
+        <!ELEMENT name (#PCDATA)>
+        <!ELEMENT price (#PCDATA)>
+        <!ATTLIST price isDiscounted (false | true) #IMPLIED>
+        <!ELEMENT description (#PCDATA)>
+        <!ELEMENT count (#PCDATA)>
+        <!ELEMENT category (#PCDATA)>
+]>

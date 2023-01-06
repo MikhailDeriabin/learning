@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="products"/>
+
+  <xs:complexType name="price">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="isDiscounted" default="false"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="item">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element name="price" type="xs:float" />
+      <xs:element name="description" type="xs:string" minOccurs="0"/>
+      <xs:element name="count" type="xs:integer" minOccurs="0"/>
+      <xs:element name="category" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="itemId" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="products">
+    <xs:sequence>
+      <xs:element type="item" name="item" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

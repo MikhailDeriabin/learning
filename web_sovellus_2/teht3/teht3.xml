@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<products>
+    <item itemId="_0">
+        <name>Milk</name>
+        <price isDiscounted="false">1.5</price>
+        <description>Usual milk for usual people</description>
+        <count>140</count>
+        <category>Dairy products</category>
+    </item>
+
+    <item itemId="_1">
+        <name>Hammer</name>
+        <price isDiscounted="true">35</price>
+        <description>Useful tool in every home</description>
+        <count>35</count>
+        <category>Hand tools</category>
+    </item>
+</products>

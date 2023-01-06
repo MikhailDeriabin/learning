@@ -1,0 +1,24 @@
+{
+  "notes": [
+    {
+      "id": 1,
+      "content": "Some note",
+      "date": "29.7.2022"
+    },
+    {
+      "id": 2,
+      "content": "Some event",
+      "date": "29.8.2022"
+    },
+    {
+      "content": "Grab some milk",
+      "date": "29.8.2022",
+      "id": 3
+    },
+    {
+      "content": "John's birthday 23.09",
+      "date": "29.8.2022",
+      "id": 4
+    }
+  ]
+}

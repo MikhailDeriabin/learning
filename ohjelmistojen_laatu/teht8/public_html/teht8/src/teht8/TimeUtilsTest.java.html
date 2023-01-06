@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>TimeUtilsTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">TimeUtilsTest (20 Nov 2022 16.53.03)</a> &gt; <a href="../../index.html" class="el_group">teht8</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">teht8</a> &gt; <span class="el_source">TimeUtilsTest.java</span></div><h1>TimeUtilsTest.java</h1><pre class="source lang-java linenums">package teht8;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
+<span class="fc" id="L11">class TimeUtilsTest {</span>
+	@Test
+	@DisplayName(&quot;Should return -1 for negative params&quot;)
+	@ParameterizedTest
+	@ValueSource(ints = {-234, -456, -1, -4})
+	void negativeNumsTest(int num) {
+<span class="fc" id="L17">		assertEquals(&quot;-1&quot;, TimeUtils.secToTime(num));</span>
+<span class="fc" id="L18">	}</span>
+	
+	@Test
+	@DisplayName(&quot;Should return -1 for params over 84400(=24h)&quot;)
+	@ParameterizedTest
+	@ValueSource(ints = {84401, 100000, 85000})
+	void largeNumsTest(int num) {
+<span class="fc" id="L25">		assertEquals(&quot;-1&quot;, TimeUtils.secToTime(num));</span>
+<span class="fc" id="L26">	}</span>
+	
+	@Test
+	@DisplayName(&quot;Should return 00:00:00 for zero as a param&quot;)
+	void zeroValueTest() {
+<span class="nc" id="L31">		assertEquals(&quot;00:00:00&quot;, TimeUtils.secToTime(0));</span>
+<span class="nc" id="L32">	}</span>
+	
+	@Test
+	@DisplayName(&quot;Should return 00:00:00 for 84400(=24h) as a param&quot;)
+	void maxValueTest() {
+<span class="nc" id="L37">		assertEquals(&quot;00:00:00&quot;, TimeUtils.secToTime(84400));</span>
+<span class="nc" id="L38">	}</span>
+	
+	@Test
+	@DisplayName(&quot;Should return 12:11:34 for 43894 as a param&quot;)
+	void twoDigitValuesTest() {
+<span class="nc" id="L43">		assertEquals(&quot;12:11:34&quot;, TimeUtils.secToTime(43894));</span>
+<span class="nc" id="L44">	}</span>
+	
+	@Test
+	@DisplayName(&quot;Should return 03:05:08 for 11108 as a param&quot;)
+	void oneDigitValuesTest() {
+<span class="nc" id="L49">		assertEquals(&quot;03:05:08&quot;, TimeUtils.secToTime(11108));</span>
+<span class="nc" id="L50">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>TimeUtilsTest (20 Nov 2022 16.53.03)</div></body></html>

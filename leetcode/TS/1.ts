@@ -33,9 +33,6 @@ function twoSum(nums: number[], target: number) :number[]{
             const currentStartNum :number = nums[j];
             const currentEndNum :number = nums[numsLength-j-1];
 
-            console.log('currentStartNum: ', currentStartNum);
-            console.log('currentEndNum: ', currentEndNum);
-
             if(currentStartNum === searchNumStart)
                 return [i, j];
 

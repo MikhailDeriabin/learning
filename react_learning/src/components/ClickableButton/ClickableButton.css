@@ -1,0 +1,6 @@
+.clickable-button{
+    min-width: 100px;
+    min-height: 40px;
+    background-color: red;
+    color: black;
+}

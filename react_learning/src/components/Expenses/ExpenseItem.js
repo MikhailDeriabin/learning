@@ -3,14 +3,14 @@ import './ExpenseItem.css';
 import Date from '../Date';
 
 function ExpenseItem(props) {
-    const {itemDate, itemTitle, itemAmount} = props.itemObj;
+    const {date, title, amount} = props.itemObj;
 
     return (
         <div className="elem-body">
-            <h2>Title: {itemTitle}</h2>
+            <h2>Title: {title}</h2>
             <div>
-                <Date date={itemDate} separator="."></Date>
-                <p>Amount: {itemAmount} €</p>
+                <Date date={date} separator="."></Date>
+                <p>Amount: {amount} €</p>
             </div>
         </div>
     );

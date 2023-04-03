@@ -1,5 +1,5 @@
 function Date(props) {
-    const date = props.date;
+    let date = props.date;
     const separator = props.separator;
 
     const day = date.getDate();

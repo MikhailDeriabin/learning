@@ -1,12 +1,14 @@
 import { useState } from "react";
 
-function NewExpenseForm() {
+function NewExpenseForm(props) {
+    const {onSaveData} = props;
+
     const [title, setTitle] = useState('');
     const [amount, setAmount] = useState('');
+
     const titleChangeHandler = (event) => {
         setTitle(event.target.value);
     }
-
     const amountChangeHandler = (event) => {
         setAmount(event.target.value);
     }
@@ -15,10 +17,14 @@ function NewExpenseForm() {
         event.preventDefault(); //prevent page reload (default behaviour of HTML forms)
 
         const expense = {
+            id: Math.floor(Math.random() * (3 - 10000000) + 3),
             title,
             amount,
             date: new Date()
         }
+
+        //Send data to parent elem
+        onSaveData(expense);
 
         //using two-way binding reset fields values
         //so, we set to '' both state and value of the input at the same time

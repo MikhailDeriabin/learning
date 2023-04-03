@@ -1,24 +1,34 @@
 import ExpenseItem from './components/Expenses/ExpenseItem';
 import ClickableButton from "./components/ClickableButton/ClickableButton";
-import NewExpenseForm from "./components/NewExpenseForm/NewExpenseForm";
+import NewExpense from "./components/NewExpense/NewExpense";
+import {useState} from "react";
+
+const initialState = [];
 
 function App() {
-    const receivedData = [
-        { itemDate: new Date(2023, 2, 26), itemTitle: "Lol", itemAmount: 123 },
-        { itemDate: new Date(2022, 10, 2), itemTitle: "Kek", itemAmount: 56.89 }
-    ];
-  return (
-    <div className="App">
-        <NewExpenseForm />
-        <div className="expense-items">
-            <ExpenseItem itemObj={receivedData[0] }/>
-            <ExpenseItem itemObj={receivedData[1]}/>
-        </div>
+    const [displayedData, setDisplayedData] = useState(initialState);
 
+    const addNewItemHandler = (item) => {
+        setDisplayedData((previousState) => {
+            return [item, ...previousState];
+        });
+    }
+
+    const nothingFoundMessageP = <p>Nothing is found</p>;
+    const itemsFound = displayedData.map(item => <ExpenseItem key={item.id} itemObj={item}/>);
+
+    return (
+    <div className="App">
+        <NewExpense onAddItem={addNewItemHandler}/>
+        <div className="expense-items">
+            {displayedData.length === 0 ? (nothingFoundMessageP) : null}
+            {/*remember to add unique key*/}
+            {itemsFound}
+        </div>
 
         <ClickableButton text='Lol'/>
     </div>
-  );
+    );
 }
 
 export default App;

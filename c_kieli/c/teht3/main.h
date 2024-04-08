@@ -1,0 +1,1 @@
+void append(char* pWhereStr, char* pToStr);

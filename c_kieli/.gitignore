@@ -1,0 +1,10 @@
+/.vscode
+*.stackdump
+*.exe
+*.vs
+*.xml
+*.txt
+cmake*
+.iml
+cmake-build-debug
+cpp/*/.idea

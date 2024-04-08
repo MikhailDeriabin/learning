@@ -53,6 +53,43 @@ _ReSharper*/
 # Rider
 .idea/
 
+# C and C++ - Common build directories, object, and binary files
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.dylib
+*.out
+*.a
+*.lib
+*.pdb
+*.gch
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+*.make
+*.i
+*.ii
+*.s
+*.su
+*.d
+*.asm
+*.sln
+*.ncb
+*.plg
+*.vcxproj*
+*.ilk
+# Build directories
+Debug/
+Release/
+x64/
+x86/
+bin/
+lib/
+
 # React Native - Specific directories and files
 ios/Pods/
 ios/*.xcworkspace

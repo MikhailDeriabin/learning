@@ -1,0 +1,25 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: ./backend.Dockerfile
+    stop_signal: SIGINT
+    networks:
+      - api
+    ports:
+      - '5000:5000'
+
+  frontend:
+    build:
+      dockerfile: ./frontend.Dockerfile
+    networks:
+      - api
+      - ui
+    ports:
+      - '3000:3000'
+    depends_on:
+      - backend
+
+networks:
+  ui:
+  api:

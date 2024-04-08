@@ -1,0 +1,15 @@
+#translationSection{
+    display: flex;
+    min-width: 50%;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+#translateTextarea{
+    min-height: 200px;
+}
+#textAreaControl{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

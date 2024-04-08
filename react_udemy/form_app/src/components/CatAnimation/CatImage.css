@@ -1,0 +1,31 @@
+.cat-wrapper {
+    position: relative;
+    width: 100%;
+    height: 80px;
+    overflow: hidden;
+}
+
+.cat {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 80px;
+    height: 80px;
+    will-change: transform;
+    animation: spinAndMove 2s forwards ease;
+    background-image: url("./cat.jpg");
+    background-position: left;
+    background-repeat: no-repeat;
+    background-size: 80px;
+}
+
+@keyframes spinAndMove {
+    0% {
+        transform: skewX(0deg) translateX(0);
+        opacity: 1;
+    }
+    100% {
+        transform: skewX(12deg) translateX(300%);
+        opacity: 0;
+    }
+}

@@ -1,0 +1,23 @@
+services:
+  db:
+    image: postgres:11-bullseye
+    restart: always
+    environment:
+      - POSTGRES_USER=webui
+      - POSTGRES_PASSWORD=webui
+      - POSTGRES_DB=webui
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - webui_dev:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  adminer:
+    build: 
+      dockerfile: pretty-adminer.Dockerfile
+    restart: always
+    ports:
+      - 8080:8080
+        
+volumes:
+  webui_dev:

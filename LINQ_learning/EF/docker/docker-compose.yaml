@@ -1,0 +1,23 @@
+services:
+  db:
+    image: postgres:11-bullseye
+    restart: always
+    environment:
+      - POSTGRES_USER=ef_dev
+      - POSTGRES_PASSWORD=ef_dev
+      - POSTGRES_DB=ef_dev
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - ef_dev:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  adminer:
+    build: 
+      dockerfile: pretty-adminer.Dockerfile
+    restart: always
+    ports:
+      - 8080:8080
+        
+volumes:
+  ef_dev:

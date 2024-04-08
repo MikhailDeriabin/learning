@@ -1,0 +1,6 @@
+services:
+  web_app:
+    image: devopsdockeruh/simple-web-service
+    command: server
+    ports:
+      - 8080:8080

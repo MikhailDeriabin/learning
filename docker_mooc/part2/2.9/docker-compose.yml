@@ -1,0 +1,55 @@
+services:
+  front:
+    build:
+      dockerfile: ./front.Dockerfile
+    ports:
+      - 9090:9090
+    depends_on:
+      - back
+      - nginx
+    environment:
+      - FRONT_PORT=9090
+
+  back:
+    build:
+      dockerfile: ./back.Dockerfile
+    ports:
+      - 8080:8080
+    depends_on:
+      - redis
+      - postgres
+      - nginx
+    environment:
+      - PORT=8080
+      - REQUEST_ORIGIN=http://localhost
+      - REDIS_HOST=29-redis-1
+      - POSTGRES_HOST=back_postgres_db
+      - POSTGRES_USER=lol
+      - POSTGRES_PASSWORD=superpassword
+      - POSTGRES_DATABASE=back
+
+  redis:
+    image: redis:6.2.12-bullseye
+    restart: unless-stopped
+    volumes:
+      - redis:/data
+
+  postgres:
+    image: postgres:15.3-bullseye
+    container_name: back_postgres_db
+    volumes:
+      - ./database:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=lol
+      - POSTGRES_PASSWORD=superpassword
+      - POSTGRES_DB=back
+
+  nginx:
+    image: nginx:1.23.4-bullseye
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+
+volumes:
+  redis:

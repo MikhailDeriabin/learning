@@ -1,0 +1,16 @@
+#header {
+    text-align: center;
+    margin: 3rem auto;
+}
+
+
+#image {
+    width: 5rem;
+    height: 5rem;
+    object-fit: contain;
+    background-color: transparent;
+}
+
+#h {
+    font-size: 1.5rem;
+}

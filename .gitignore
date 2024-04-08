@@ -1,3 +1,83 @@
-leetcode/TS/node_modules
+# Node - Common directories and files for JavaScript/TypeScript projects
+node_modules/
+package-lock.json
+yarn.lock
+npm-debug.log*
+yarn-error.log
+.env
+.env.local
+dist/
+build/
+*.log
+*.tsbuildinfo
+
+# TypeScript - Specific ignore patterns
+*.js.map
+
+# Java - Common build directories and artifacts for Java projects
+target/
+out/
+*.class
+*.jar
+*.war
+*.ear
 *.iml
-.idea
+# Maven
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+# Gradle
+.gradle/
+
+# C#/.NET - Common build directories and artifacts
+[Bb]in/
+[Oo]bj/
+*.user
+*.userosscache
+*.suo
+*.userprefs
+*.nupkg
+*.snk
+# ReSharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+# Visual Studio Code directories
+.vscode/
+# Visual Studio cache/options directory
+.vs/
+# Rider
+.idea/
+
+# React Native - Specific directories and files
+ios/Pods/
+ios/*.xcworkspace
+ios/build/
+android/.gradle
+android/build/
+android/app/build/
+
+# Watchman
+.watchmanconfig
+
+# Fastlane (commonly used with React Native for automation)
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+
+# Logs and databases
+*.sql
+*.sqlite
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Other common directories and files to ignore
+temp/
+tmp/

@@ -1,0 +1,25 @@
+{
+  "name": "node_udemy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "cd MVCExample && mocha",
+    "cluster": "cd performanceExample && pm2 start serverPM2.js -i max",
+    "cluster_reload": "cd performanceExample && pm2 reload serverPM2.js",
+    "cluster_delete": "cd performanceExample && pm2 delete serverPM2.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "fs": "^0.0.1-security",
+    "mocha": "^10.2.0",
+    "nodemon": "^2.0.20",
+    "pm2": "^5.2.2",
+    "supertest": "^6.3.3"
+  }
+}

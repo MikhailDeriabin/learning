@@ -1,0 +1,23 @@
+{
+  "name": "react-essentials-start",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@types/node": "^16.18.86",
+    "@types/react": "^18.2.61",
+    "@types/react-dom": "^18.2.19",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "typescript": "^4.9.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.0.0",
+    "vite": "^4.3.9"
+  },
+  "keywords": [],
+  "description": ""
+}

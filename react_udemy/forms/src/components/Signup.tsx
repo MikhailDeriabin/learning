@@ -1,5 +1,8 @@
 import {FormEvent} from "react";
 
+
+//U can also use built-in browser validations:
+//required, type, minLength/maxLength, pattern, min/max(for numbers)
 export default function Signup() {
 
     function onSubmitForm(e: FormEvent<HTMLFormElement>) {
@@ -21,7 +24,13 @@ export default function Signup() {
 
             <div className="control">
                 <label htmlFor="email">Email</label>
-                <input id="email" type="email" name="email" />
+                <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    minLength={4}
+                    maxLength={20}
+                />
             </div>
 
             <div className="control-row">
@@ -45,7 +54,12 @@ export default function Signup() {
         <div className="control-row">
             <div className="control">
                 <label htmlFor="first-name">First Name</label>
-                <input type="text" id="first-name" name="first-name" />
+                <input
+                    type="text"
+                    id="first-name"
+                    name="first-name"
+                    pattern="[M]*"
+                />
             </div>
 
             <div className="control">

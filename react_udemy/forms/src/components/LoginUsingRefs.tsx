@@ -9,8 +9,10 @@ type FormState = {
     [FormField.password]: string;
 }
 
+//Validating on submit. The best solution is combine both on submit and on every keystroke
+export default function LoginUsingRefs() {
+    const [emailIsInvalid, setEmailIsInvalid] = useState<boolean>();
 
-export default function LoginUsingState() {
     const emailInputRef = useRef<HTMLInputElement>(null);
     const passwordInputRef = useRef<HTMLInputElement>(null);
 
@@ -24,6 +26,14 @@ export default function LoginUsingState() {
 
         const enteredEmail = emailInputRef.current?.value;
         const enteredPassword = passwordInputRef.current?.value;
+
+        const emailIsInvalid = !enteredEmail && !formData[FormField.email].includes('@');
+        if(emailIsInvalid){
+            setEmailIsInvalid(true);
+            return;
+        }
+        setEmailIsInvalid(false);
+
     }
 
   return (
@@ -35,10 +45,11 @@ export default function LoginUsingState() {
           <label htmlFor="email">Email</label>
           <input
               id="email"
-              type="email"
+              type="text"
               name="email"
               ref={emailInputRef}
           />
+            {emailIsInvalid && <div className="control-error">Email is invalid</div>}
         </div>
 
         <div className="control no-margin">

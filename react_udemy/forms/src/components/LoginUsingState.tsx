@@ -1,42 +1,34 @@
-import {ChangeEvent, FormEvent, useState, FocusEvent} from "react";
+import {FormEvent} from "react";
+import CustomInput from "./CustomInput";
+import {useInput} from "../hooks/useInput";
+import {hasMinLength, isEmail} from "../util/validation";
 
-enum FormField {
-    email,
-    password
+
+function validateEmail(value: string): string {
+    return value && isEmail(value) ? '' : 'Email is invalid';
 }
-type FormState<T=any> = {
-    [FormField.email]: T;
-    [FormField.password]: T;
+function validatePassword(value: string): string {
+    return value && hasMinLength(value, 4) ? '' : 'Password should be at least 4 characters';
 }
 
-
+//Validation on every keystroke
 export default function LoginUsingState() {
-    const [formData, setFormData] = useState<FormState<string>>({
-        [FormField.email]: '',
-        [FormField.password]: ''
-    });
+    const {
+        value: email,
+        error: emailError,
+        handleInputChange: emailOnChange,
+        handleInputBlur: emailOnBlur
+    } = useInput('', validateEmail);
 
-    const [modifiedData, setModifiedData] = useState<FormState<boolean>>({
-        [FormField.email]: false,
-        [FormField.password]: false
-    });
+    const {
+        value: password,
+        error: passwordError,
+        handleInputChange: passwordOnChange,
+        handleInputBlur: passwordOnBlur
+    } = useInput('', validatePassword);
 
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
-    }
-
-    function handleInputChange(field: FormField, e: ChangeEvent<HTMLInputElement>) {
-        setFormData(prevState => ({
-            ...prevState,
-            [field]: e.target.value,
-        }));
-    }
-
-    function handleInputBlur(field: FormField) {
-        setModifiedData(prevState => ({
-            ...prevState,
-            [field]: true
-        }));
     }
 
   return (
@@ -44,30 +36,29 @@ export default function LoginUsingState() {
       <h2>Login</h2>
 
       <div className="control-row">
-        <div className="control no-margin">
-          <label htmlFor="email">Email</label>
-          <input
+          <CustomInput
               id="email"
+              label="Email"
               type="email"
               name="email"
-              onBlur={() => handleInputBlur(FormField.email)}
-              onChange={(e) => handleInputChange(FormField.email, e)}
-              value={formData[FormField.email]}
-          />
-            <div className="control-error"></div>
-        </div>
 
-        <div className="control no-margin">
-          <label htmlFor="password">Password</label>
-          <input
+              onBlur={emailOnBlur}
+              value={email}
+              onChange={emailOnChange}
+
+              error={emailError}
+          />
+          <CustomInput
               id="password"
+              label="Password"
               type="password"
               name="password"
-              onBlur={() => handleInputBlur(FormField.password)}
-              onChange={(e) => handleInputChange(FormField.password, e)}
-              value={formData[FormField.password]}
+
+              onBlur={passwordOnBlur}
+              onChange={passwordOnChange}
+              value={password}
+              error={passwordError}
           />
-        </div>
       </div>
 
       <p className="form-actions">

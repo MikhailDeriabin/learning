@@ -32,7 +32,7 @@ export default function useGetData<TData>(initialValue: TData, endpoint: string,
         }
 
         getData();
-    }, []);
+    }, [endpoint, options]);
 
     return {
         isLoadingS,

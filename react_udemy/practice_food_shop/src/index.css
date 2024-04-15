@@ -35,9 +35,15 @@ body {
   border: 2px solid #ffc404;
 }
 
-#main-header button {
+#main-header .cartButton {
+  border: none;
+  background-color: transparent;
   font-size: 1.5rem;
   font-family: 'Lato', sans-serif;
+  color: #ffc404;
+}
+#main-header .cartButton:hover {
+  cursor: pointer;
 }
 
 h1 {

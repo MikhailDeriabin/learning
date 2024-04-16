@@ -19,7 +19,7 @@ export const increaseMealCountBy1: ContextReducer = (state, payload) => {
     for(let i=0, l=newMeals.length; i<l; i++) {
         const meal = newMeals[i];
         if(meal.id === payload){
-            newMeals[i] = {...meal, count: ++meal.count};
+            newMeals[i] = {...meal, count: meal.count++};
             break;
         }
     }

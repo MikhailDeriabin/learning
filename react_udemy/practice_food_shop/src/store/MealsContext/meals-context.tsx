@@ -8,21 +8,23 @@ import {
 } from "./reducers";
 import useGetData from "../../hooks/requestApi/useGetData/useGetData";
 import {Meal} from "../../types/Meal";
+import {defaultReducer, generateInitStateAndContent} from "./util";
 
+const [initState, initContent] = generateInitStateAndContent<MealsContextState, MealsContextContent>(
+    'MealsContext',
+    {
+        meals: [],
+        errorLoadingMeals: null,
+        areMealsLoading: false
+    },
+    {
+        eraseErrorLoadingMeals: null,
+        increaseMealCountBy1: null,
+        decreaseMealCountBy1: null
+    }
+);
 
-const initialState: MealsContextState = {
-    meals: [],
-    errorLoadingMeals: null,
-    areMealsLoading: false
-};
-const initialContextContent: MealsContextContent = {
-    ...initialState,
-    eraseErrorLoadingMeals: () => {console.error('MealsContext is not available'); return;},
-
-    increaseMealCountBy1: (mealId: string) => {console.error('MealsContext is not available'); return;},
-    decreaseMealCountBy1: (mealId: string) => {console.error('MealsContext is not available'); return;}
-};
-export const MealsContext = createContext<MealsContextContent>(initialContextContent);
+export const MealsContext = createContext<MealsContextContent>(initContent);
 
 function contextReducer(state: MealsContextState, action: MealsContextReducerAction){
     switch (action.type) {
@@ -35,7 +37,7 @@ function contextReducer(state: MealsContextState, action: MealsContextReducerAct
         case 'DECREASE_MEAL_COUNT':
             return decreaseMealCountBy1(state, action.payload);
         default:
-            return state;
+            return defaultReducer(state, action.type);
     }
 }
 type Props = {
@@ -55,10 +57,13 @@ export default function MealsProvider ({ children }: Props) {
         updateMealsStatesWhenLoaded();
     }, [areMealsLoading]);
 
-    const [state, reducer] = useReducer(contextReducer, {...initialState, meals});
+    const [state, reducer] = useReducer(contextReducer, {...initState, meals});
 
     function updateMealsStatesWhenLoaded(){
-        reducer({type: 'UPDATE_MEALS_STATES_WHEN_LOADED', payload: {meals, errorLoadingMeals, areMealsLoading}});
+        const mealsWithCount = meals?.map(m => {
+            return {...m, count: 0};
+        });
+        reducer({type: 'UPDATE_MEALS_STATES_WHEN_LOADED', payload: {meals: mealsWithCount, errorLoadingMeals, areMealsLoading}});
     }
 
     function eraseErrorLoadingMeals(){
@@ -77,7 +82,7 @@ export default function MealsProvider ({ children }: Props) {
         ...state,
         eraseErrorLoadingMeals,
         increaseMealCountBy1,
-        decreaseMealCountBy1
+        decreaseMealCountBy1,
     }
     return(
         <MealsContext.Provider value={contextValue}>

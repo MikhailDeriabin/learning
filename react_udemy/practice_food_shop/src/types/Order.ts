@@ -4,5 +4,5 @@ export type Order = {
     street: string;
     ['postal-code']: number;
     city: string;
-    items: string[]
+    items: string[];
 }

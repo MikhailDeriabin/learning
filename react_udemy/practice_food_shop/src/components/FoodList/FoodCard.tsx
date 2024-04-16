@@ -1,16 +1,14 @@
 import {Meal} from "../../types/Meal";
-import {useContext} from "react";
-import {MealsContext} from "../../store/MealsContext/meals-context";
+import {memo} from "react";
 
 type Props = {
     meal: Meal;
+    onAddMeal: (mealId: string) => void;
 }
 
-export default function FoodCard({ meal }: Props) {
-    const {increaseMealCountBy1} = useContext(MealsContext);
-
+const FoodCard =memo(function ({ meal, onAddMeal }: Props) {
     function handleAdd(){
-        increaseMealCountBy1(meal.id);
+        onAddMeal(meal.id);
     }
 
     return(
@@ -26,4 +24,6 @@ export default function FoodCard({ meal }: Props) {
             </article>
         </div>
     );
-}
+});
+
+export default FoodCard;

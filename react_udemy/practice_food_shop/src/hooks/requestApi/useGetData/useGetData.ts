@@ -1,5 +1,5 @@
 import {Dispatch, SetStateAction, useEffect, useState} from "react";
-import getUrl from "../../getUrl";
+import getUrl from "../getUrl";
 import {RequestError} from "./Error";
 import {makeRequest} from "../makeRequest";
 

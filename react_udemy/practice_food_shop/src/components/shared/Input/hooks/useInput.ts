@@ -25,6 +25,7 @@ export function useInput(validator?: Validator, initialValue?: string) {
         valueS,
         handleChange,
         errorS,
+        setErrorS,
         handleBlur,
         handleFocus
     };

@@ -1,4 +1,4 @@
-import {createContext, ReactNode, useEffect, useReducer} from "react";
+import {createContext, ReactNode, useCallback, useEffect, useReducer} from "react";
 import {MealsContextContent, MealsContextReducerAction, MealsContextState} from "./types";
 import {
     decreaseMealCountBy1,
@@ -9,6 +9,7 @@ import {
 import useGetData from "../../hooks/requestApi/useGetData/useGetData";
 import {Meal} from "../../types/Meal";
 import {defaultReducer, generateInitStateAndContent} from "./util";
+import getUrl from "../../hooks/requestApi/getUrl";
 
 const [initState, initContent] = generateInitStateAndContent<MealsContextState, MealsContextContent>(
     'MealsContext',
@@ -61,22 +62,22 @@ export default function MealsProvider ({ children }: Props) {
 
     function updateMealsStatesWhenLoaded(){
         const mealsWithCount = meals?.map(m => {
-            return {...m, count: 0};
+            return {...m, count: 0, image: getUrl(m.image)};
         });
         reducer({type: 'UPDATE_MEALS_STATES_WHEN_LOADED', payload: {meals: mealsWithCount, errorLoadingMeals, areMealsLoading}});
     }
 
-    function eraseErrorLoadingMeals(){
+    const eraseErrorLoadingMeals = useCallback(function (){
         reducer({type: 'ERASE_ERROR_LOADING_MEALS', payload: null});
-    }
+    }, [])
 
-    function increaseMealCountBy1(mealId: string){
+    const increaseMealCountBy1 = useCallback(function (mealId: string){
         reducer({type: 'INCREASE_MEAL_COUNT', payload: mealId});
-    }
+    }, []);
 
-    function decreaseMealCountBy1(mealId: string){
+    const decreaseMealCountBy1 = useCallback(function (mealId: string){
         reducer({type: 'DECREASE_MEAL_COUNT', payload: mealId});
-    }
+    }, []);
 
     const contextValue: MealsContextContent = {
         ...state,

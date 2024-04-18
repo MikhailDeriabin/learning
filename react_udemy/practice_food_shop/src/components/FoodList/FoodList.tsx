@@ -21,7 +21,7 @@ export default function FoodList() {
         <div id="meals">
             {
                 meals.map((meal: Meal) => ((
-                    <FoodCard onAddMeal={increaseMealCountBy1} key={meal.id} meal={{...meal, image: getUrl(meal.image)}}/>
+                    <FoodCard onAddMeal={increaseMealCountBy1} key={meal.id} meal={meal}/>
                 )))
             }
         </div>

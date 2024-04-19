@@ -1,8 +1,8 @@
-import {ForwardedRef, forwardRef, HTMLAttributes, ReactNode, useImperativeHandle, useRef} from "react";
+import {ForwardedRef, forwardRef, HTMLProps, ReactNode, useImperativeHandle, useRef} from "react";
 
 type Props = {
     children?: ReactNode;
-} & HTMLAttributes<HTMLDialogElement>;
+} & HTMLProps<HTMLDialogElement>;
 export type ModalRef = {
     open: () => void;
     close: () => void;

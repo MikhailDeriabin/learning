@@ -4,6 +4,15 @@
   box-sizing: border-box;
 }
 
+.center{
+  margin: 0 auto;
+}
+
+.error{
+  background-color: #e35656;
+  padding: 50px;
+}
+
 body {
   margin: 0;
   font-family: 'Raleway', sans-serif;

@@ -1,4 +1,4 @@
-import {ForwardedRef, forwardRef, HTMLAttributes, useImperativeHandle, useRef} from "react";
+import {ForwardedRef, forwardRef, HTMLProps, useImperativeHandle, useRef} from "react";
 import {useInput} from "./hooks/useInput";
 
 type Props = {
@@ -7,7 +7,7 @@ type Props = {
     placeholder?: string;
 
     validator?: (value: string) => string;
-} & HTMLAttributes<HTMLDivElement>;
+} & HTMLProps<HTMLDivElement>;
 
 export type InputRef = {
     value: string;

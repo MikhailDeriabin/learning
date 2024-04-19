@@ -16,5 +16,16 @@ export const addItem: ContextReducer = (state, payload) => {
 }
 
 export const removeItem: ContextReducer = (state, payload) => {
-    return state;
+    const itemIndex = state.items.findIndex(item => item.id === payload);
+    const item = state.items[itemIndex];
+
+    const items = [...state.items];
+    if (item.count === 1) {
+        items.splice(itemIndex, 1);
+        return {...state, items};
+    }
+
+    items[itemIndex] = {...item, count: item.count-1};
+
+    return {...state, items};
 }

@@ -1,12 +1,20 @@
 import {Meal} from "../types/Meal";
 import {currencyFormatter} from "../util/formatting";
 import Button from "../UI/Button";
+import {useContext} from "react";
+import {MealsContext} from "../store/MealsContext/meals-context";
 
 type Props = {
     meal: Meal;
 }
 
 export default function MealItem({meal}: Props) {
+
+    const {addItem} = useContext(MealsContext);
+
+    function handleAddMeal(){
+        addItem(meal);
+    }
 
     return(
         <li className="meal-item">
@@ -18,7 +26,7 @@ export default function MealItem({meal}: Props) {
                     <p className="meal-item-description">{meal.description}</p>
                 </div>
                 <p className="meal-item-actions">
-                    <Button>Add to Cart</Button>
+                    <Button onClick={handleAddMeal}>Add to Cart</Button>
                 </p>
             </article>
         </li>

@@ -1,15 +1,16 @@
-import {HTMLAttributes, ReactNode} from "react";
+import {HTMLProps, ReactNode} from "react";
 
 type Props = {
     textOnly?: boolean;
     className?: string;
+    type?: 'button' | 'submit' | 'reset';
     children?: ReactNode;
-} & HTMLAttributes<HTMLButtonElement>;
+} & HTMLProps<HTMLButtonElement>;
 
-export default function Button({textOnly, className, children, ...props}: Props) {
+export default function Button({textOnly, className, type, children, ...props}: Props) {
     const cssClasses = textOnly ? 'text-button' : 'button';
 
     return(
-        <button {...props} className={`${cssClasses} ${className}`}>{children}</button>
+        <button {...props} type={type} className={`${cssClasses} ${className}`}>{children}</button>
     );
 }

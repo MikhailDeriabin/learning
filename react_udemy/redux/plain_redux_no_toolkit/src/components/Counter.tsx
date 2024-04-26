@@ -4,8 +4,8 @@ import {useDispatch, useSelector} from "react-redux";
 
 const Counter = () => {
     //Subscribe to the store count value changes
-    const count = useSelector<State>(state => state.count);
-    const isCounterDisplayed = useSelector<State>(state => state.isCounterDisplayed);
+    const count = useSelector<State>(state => state.count) as number;
+    const isCounterDisplayed = useSelector<State>(state => state.isCounterDisplayed) as boolean;
 
     //Get the dispatch function from the store
     const dispatch = useDispatch();

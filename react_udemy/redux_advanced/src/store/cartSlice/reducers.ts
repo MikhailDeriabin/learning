@@ -19,14 +19,8 @@ export const addItemReducer: CartReducer = (state, item) => {
         return;
     }
 
-    for (let i = 0, l=state.addedItems.length; i<l; i++) {
-        const curItem = state.addedItems[i];
-        if(curItem.title === parsedItem.title){
-            curItem.quantity++;
-            curItem.total += parsedItem.price;
-            break;
-        }
-    }
+    existingItem.quantity++;
+    existingItem.total += parsedItem.price;
 }
 
 export const removeItemReducer: CartReducer = (state, title) => {
@@ -42,12 +36,6 @@ export const removeItemReducer: CartReducer = (state, title) => {
         return;
     }
 
-    for (let i = 0, l=state.addedItems.length; i<l; i++) {
-        const curItem = state.addedItems[i];
-        if(curItem.title === title){
-            curItem.quantity--;
-            curItem.total -= curItem.price;
-            break;
-        }
-    }
+    existingItem.quantity--;
+    existingItem.total -= existingItem.price;
 }

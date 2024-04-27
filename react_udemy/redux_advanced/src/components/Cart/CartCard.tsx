@@ -8,6 +8,10 @@ import {StoreT} from "../../store";
 
 const CartCard = () => {
     const items = useSelector<StoreT, Item[]>(state => state.cart.addedItems);
+    const isCartOpen = useSelector<StoreT, boolean>(state => state.ui.isCartOpen);
+
+    if(!isCartOpen)
+        return <></>;
 
   return (
     <Card className={classes.cart}>

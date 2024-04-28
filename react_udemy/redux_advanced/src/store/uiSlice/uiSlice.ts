@@ -1,11 +1,14 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {closeCartReducer, openCartReducer} from "./reducers";
+import {closeCartReducer, openCartReducer, showNotificationReducer} from "./reducers";
+import {NotificationT} from "../../type/NotificationT";
 
 export type UIState = {
-    isCartOpen: boolean
+    isCartOpen: boolean,
+    notification: NotificationT | null
 }
 const initialState: UIState = {
-    isCartOpen: false
+    isCartOpen: false,
+    notification: null
 }
 
 const slice = createSlice({
@@ -18,9 +21,13 @@ const slice = createSlice({
 
         closeCart: (state) => {
             closeCartReducer(state);
+        },
+
+        showNotification: (state, {payload: notification}) => {
+            showNotificationReducer(state, notification);
         }
     }
 });
 
-export const uiActions = slice.actions;
+export const ui = slice.actions;
 export const uiReducers = slice.reducer;

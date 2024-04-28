@@ -5,16 +5,19 @@ import {ProductItemT} from "../../type/Item";
 const Products = () => {
     const items: ProductItemT[] = [
         {
+            id: 'p1',
             title: 'Tomato',
             price: 3,
             description: 'Tasty and fresh tomato'
         },
         {
+            id: 'p2',
             title: 'T-shirt',
             price: 10,
             description: 'Be stylish af'
         },
         {
+            id: 'p3',
             title: 'Watch',
             price: 120,
             description: 'Be that always-in-time guy'

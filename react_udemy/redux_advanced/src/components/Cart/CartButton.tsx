@@ -1,16 +1,16 @@
 import classes from './CartButton.module.css';
 import {useDispatch, useSelector} from "react-redux";
-import {StoreT} from "../../store";
-import {uiActions} from "../../store/uiSlice/uiSlice";
+import {ui} from "../../store/uiSlice/uiSlice";
+import {AppState} from "../../store";
 
 const CartButton = () => {
-    const itemsCount = useSelector<StoreT, number>(state => state.cart.addedItems.length);
+    const itemsCount = useSelector<AppState, number>(state => state.cart.addedItems?.length);
 
-    const isCartOpen = useSelector<StoreT, boolean>(state => state.ui.isCartOpen);
+    const isCartOpen = useSelector<AppState, boolean>(state => state.ui.isCartOpen);
     const dispatch = useDispatch();
 
     function handleToggleCart(){
-        isCartOpen ? dispatch(uiActions.closeCart()) : dispatch(uiActions.openCart());
+        isCartOpen ? dispatch(ui.closeCart()) : dispatch(ui.openCart());
     }
 
   return (

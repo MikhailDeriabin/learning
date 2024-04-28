@@ -3,12 +3,12 @@ import classes from './Cart.module.css';
 import CartItem from './CartItem';
 import {useSelector} from "react-redux";
 import {Item} from "../../type/Item";
-import {StoreT} from "../../store";
+import {AppState} from "../../store";
 
 
 const CartCard = () => {
-    const items = useSelector<StoreT, Item[]>(state => state.cart.addedItems);
-    const isCartOpen = useSelector<StoreT, boolean>(state => state.ui.isCartOpen);
+    const items = useSelector<AppState, Item[]>(state => state.cart.addedItems);
+    const isCartOpen = useSelector<AppState, boolean>(state => state.ui.isCartOpen);
 
     if(!isCartOpen)
         return <></>;

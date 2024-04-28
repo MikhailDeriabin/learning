@@ -1,24 +1,29 @@
 import {Item} from "../../type/Item";
 import {createSlice} from "@reduxjs/toolkit";
-import {addItemReducer, removeItemReducer} from "./reducers";
+import {addItemReducer, removeItemReducer, replaceCartItemsReducer} from "./reducers";
 
 export type CartState = {
-    addedItems: Item[]
+    addedItems: Item[],
+    totalQuantity: number
 }
 
 const initialState: CartState = {
-    addedItems: []
+    addedItems: [],
+    totalQuantity: 0
 }
 
 const cartSlice = createSlice({
     name: 'cart',
     initialState,
     reducers: {
-        addItem: (state, {payload}) => {
-            addItemReducer(state, payload);
+        addItem: (state, {payload: item}) => {
+            addItemReducer(state, item);
         },
-        removeItem: (state, {payload}) => {
-            removeItemReducer(state, payload);
+        removeItem: (state, {payload: id}) => {
+            removeItemReducer(state, id);
+        },
+        replaceCartItems: (state, {payload: items}) => {
+            replaceCartItemsReducer(state, items);
         }
     }
 });

@@ -2,6 +2,7 @@ import classes from './CartItem.module.css';
 import {Item} from "../../type/Item";
 import {useDispatch} from "react-redux";
 import {cart} from "../../store/cartSlice/cartSlice";
+import {AppDispatch} from "../../store";
 
 type Props = {
     item: Item
@@ -10,13 +11,13 @@ type Props = {
 const CartItem = ({item}: Props) => {
   const { title, quantity, total, price } = item;
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
     function handleAdd(){
         dispatch(cart.addItem(item));
     }
   function handleRemove(){
-      dispatch(cart.removeItem(item.title));
+      dispatch(cart.removeItem(item.id));
   }
 
   return (

@@ -10,3 +10,7 @@ export const openCartReducer: UIReducer = (state) => {
 export const closeCartReducer: UIReducer = (state) => {
     state.isCartOpen = false;
 }
+
+export const showNotificationReducer: UIReducer = (state, notification) => {
+    state.notification = notification;
+}

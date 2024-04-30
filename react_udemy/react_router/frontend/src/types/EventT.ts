@@ -2,6 +2,6 @@ export type EventT = {
     id: string;
     image: string;
     title: string;
-    date: Date;
+    date: string;
     description: string;
 }

@@ -1,25 +1,13 @@
 import {EventT} from "../types/EventT";
-import {useCallback} from "react";
 
+export type FetchError = { isError: boolean, message: string }
 
-export async function fetchEvents(): Promise<EventT[]> {
-    const resp = await fetch('http://localhost:8080/events/');
+export async function fetchEvents(): Promise<EventT[] | FetchError> {
+    const resp = await fetch('http://localhost:8080/events');
     if(!resp.ok)
-        throw new Error('Failed to load events');
+        //U can return an error object or throw it. If u throw it, the errorElement specified in the router config will be shown
+        throw new Error(`Could not fetch events`);
+        //return { isError: true, message: `Could not fetch events` }
     const data = await resp.json();
     return data.events as EventT[];
-}
-
-export function fetchEvent(id?: string) {
-    return useCallback(
-        async () => {
-            if(!id)
-                return null;
-            const resp = await fetch(`http://localhost:8080/events/${id}`);
-            if(!resp.ok)
-                throw new Error('Failed to load events');
-            const data = await resp.json();
-            return data.event as EventT;
-        }, [id]
-    );
 }

@@ -4,7 +4,9 @@ import {EventT} from "../types/EventT";
 
 export default function EventsPage() {
     //Here we are getting the data coming from loader function
-    const events = useLoaderData() as EventT[];
+    let events = useLoaderData() as EventT[];
+    // if(events.isError)
+    //     return <p>Error occurred: {events.message}</p>
 
     return(
         <>

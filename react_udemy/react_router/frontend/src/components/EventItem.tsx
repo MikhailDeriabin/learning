@@ -1,14 +1,20 @@
 import classes from './EventItem.module.css';
 import {EventT} from "../types/EventT";
-import {Link} from "react-router-dom";
+import {Link, useSubmit} from "react-router-dom";
 
 type Props = {
     event: EventT | null;
 }
 
 function EventItem({ event }: Props) {
+    //U can trigger some HTML event with that function
+    const submit = useSubmit();
+
   function startDeleteHandler() {
-    // ...
+    const proceed = window.confirm('Are you sure you want to delete this event?');
+
+    if (proceed)
+        submit(null, { method: 'DELETE' });
   }
 
   if(!event)
@@ -27,5 +33,4 @@ function EventItem({ event }: Props) {
     </article>
   );
 }
-
 export default EventItem;

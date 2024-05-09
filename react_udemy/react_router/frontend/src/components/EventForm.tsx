@@ -65,8 +65,6 @@ export const createUpdateEvent: ActionFunction = async function ({request, param
     const {method} = request;
     const {id} = params;
 
-    console.log(method, id);
-
     //Get data from form component (react router built-in)
     const formData = await request.formData();
 

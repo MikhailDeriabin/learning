@@ -1,95 +1,130 @@
-import {ActionFunction, Form, redirect, useActionData, useNavigate, useNavigation} from 'react-router-dom';
+import {
+  Form,
+  useNavigate,
+  useNavigation,
+  useActionData,
+  json,
+  redirect,
+  ActionFunction
+} from 'react-router-dom';
 
 import classes from './EventForm.module.css';
-import {EventT} from "../types/EventT";
+import { HTTPMethod } from '../types/HTTPMethod';
+import { EventT } from '../types/EventT';
 
 type Props = {
-    method: 'POST' | 'PATCH';
-    event: EventT | null;
+  method: HTTPMethod,
+  event?: EventT
 }
 
 function EventForm({ method, event }: Props) {
+  const data = useActionData() as { errors: Record<string, string> };
   const navigate = useNavigate();
-  const {state} = useNavigation();
+  const navigation = useNavigation();
 
-  //getting error data returned in case of 422 error (validation)
-  const actionData = useActionData() as {errors: Record<string, string>};
+  const isSubmitting = navigation.state === 'submitting';
 
   function cancelHandler() {
     navigate('..');
   }
 
-  const isSubmitting = state === 'submitting'
-  if(isSubmitting)
-      return <p>Saving event</p>
-
-
-    return (
-    //In order to be able to call the formData() and get all this form data object, where key is the name attr
-    <Form className={classes.form} method={method}>
-        {actionData && actionData.errors && <ul>
-            {
-                Object.keys(actionData.errors).map((key) =>
-                    <li key={key}>{actionData.errors[key]}</li>
-                )
-            }
-        </ul>}
+  return (
+    <Form method={method} className={classes.form}>
+      {data && data.errors && (
+        <ul>
+          {Object.values(data.errors).map((err) => (
+            <li key={err}>{err}</li>
+          ))}
+        </ul>
+      )}
       <p>
         <label htmlFor="title">Title</label>
-        <input id="title" type="text" name="title" defaultValue={event?.title} />
+        <input
+          id="title"
+          type="text"
+          name="title"
+          required
+          defaultValue={event ? event.title : ''}
+        />
       </p>
       <p>
         <label htmlFor="image">Image</label>
-        <input id="image" type="url" name="image" required defaultValue={event?.image} />
+        <input
+          id="image"
+          type="url"
+          name="image"
+          required
+          defaultValue={event ? event.image : ''}
+        />
       </p>
       <p>
         <label htmlFor="date">Date</label>
-        <input id="date" type="date" name="date" required defaultValue={event?.date} />
+        <input
+          id="date"
+          type="date"
+          name="date"
+          required
+          defaultValue={event ? event.date : ''}
+        />
       </p>
       <p>
         <label htmlFor="description">Description</label>
-        <textarea id="description" name="description" rows={5} required defaultValue={event?.description}/>
+        <textarea
+          id="description"
+          name="description"
+          rows={5}
+          required
+          defaultValue={event ? event.description : ''}
+        />
       </p>
       <div className={classes.actions}>
-        <button type="button" onClick={cancelHandler}>
+        <button type="button" onClick={cancelHandler} disabled={isSubmitting}>
           Cancel
         </button>
-        <button disabled={isSubmitting}>Save</button>
+        <button disabled={isSubmitting}>
+          {isSubmitting ? 'Submitting...' : 'Save'}
+        </button>
       </div>
     </Form>
   );
 }
+
 export default EventForm;
 
-export const createUpdateEvent: ActionFunction = async function ({request, params}) {
-    const {method} = request;
-    const {id} = params;
+export const action: ActionFunction = async ({ request, params }) => {
+  const method = request.method;
+  const data = await request.formData();
 
-    //Get data from form component (react router built-in)
-    const formData = await request.formData();
+  const eventData = {
+    title: data.get('title'),
+    image: data.get('image'),
+    date: data.get('date'),
+    description: data.get('description'),
+  };
 
-    const formFields = ['title', 'description', 'image', 'date'];
-    const data: Record<string, FormDataEntryValue | null> = {};
-    for(let i=0, l=formFields.length; i<l; i++)
-        data[formFields[i]] = formData.get(formFields[i]);
+  let url = 'http://localhost:8080/events';
 
-    let url = (method === 'PATCH' && id) ? `http://localhost:8080/events/${id}` : `http://localhost:8080/events`;
+  if (method === 'PATCH') {
+    const eventId = params.eventId;
+    url = 'http://localhost:8080/events/' + eventId;
+  }
 
-    const resp = await fetch(url, {
-        method: method,
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    });
+  const response = await fetch(url, {
+    method: method,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(eventData),
+  });
 
-    //on validation error, after u can get that resp via useActionData()
-    if(resp.status === 422)
-        return resp;
+  if (response.status === 422) {
+    return response;
+  }
 
-    if(!resp.ok)
-        throw new Error('Failed to create new event');
+  if (!response.ok) {
+    throw json({ message: 'Could not save event.' }, { status: 500 });
+  }
 
-    //Go to /events page
-    return redirect('/events');
+  return redirect('/events');
 }
+

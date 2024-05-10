@@ -11,7 +11,6 @@ const {
 const router = express.Router();
 
 router.get('/', async (req, res, next) => {
-  console.log(req.token);
   try {
     const events = await getAll();
     res.json({ events: events });

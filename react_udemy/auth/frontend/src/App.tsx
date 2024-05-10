@@ -1,53 +1,66 @@
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import HomePage from "./page/HomePage";
-import EventsPage, {loadEvents} from "./page/EventsPage";
-import NewEventPage from "./page/NewEventPage";
-import EditEventPage from "./page/EditEventPage";
-import PageLayout from "./page/PageLayout";
-import EventDetailsPage, {eventDetailsAction, eventsDetailsPageLoader} from "./page/EventDetailsPage";
-import EventLayout from "./page/EventLayout";
-import ErrorPage from "./page/ErrorPage";
-import {createUpdateEvent} from "./components/EventForm";
-import NewsletterPage, {newsletterAction} from "./page/NewsletterPage";
+import EditEventPage from './pages/EditEventPage';
+import ErrorPage from './pages/ErrorPage';
+import EventDetailPage, {
+  loader as eventDetailLoader,
+  action as deleteEventAction,
+} from './pages/EventDetailPage';
+import EventsPage, { loader as eventsLoader } from './pages/EventsPage';
+import EventsRootLayout from './pages/EventsRootLayout';
+import HomePage from './pages/HomePage';
+import NewEventPage from './pages/NewEventPage';
+import RootLayout from './pages/RootLayout';
+import { action as manipulateEventAction } from './components/EventForm';
+import NewsletterPage, { action as newsletterAction } from './pages/NewsletterPage';
 
 const router = createBrowserRouter([
     {
-        path: '/',
-        element: <PageLayout/>,
-        //Show this page if any error will be thrown
-        errorElement: <ErrorPage/>,
-        children: [
-            { index: true, element: <HomePage/> },
+      path: '/',
+      element: <RootLayout />,
+      errorElement: <ErrorPage />,
+      children: [
+        { index: true, element: <HomePage /> },
+        {
+          path: 'events',
+          element: <EventsRootLayout />,
+          children: [
             {
-                path: 'events',
-                element: <EventLayout/>,
-                children: [
-                    //u can specify the loader func, which is kinda pre-hook, which executes before the page is rendered
-                    //The loader func should return the value u want to receive in the component
-                    { index: true, element: <EventsPage/>, loader: loadEvents },
-                    {
-                        path: ':id',
-                        //Here we have a shared loader. U can get data from it via useRouteLoaderData('event-detail')
-                        loader: eventsDetailsPageLoader,
-                        id: 'event-detail',
-                        children: [
-                            { index: true,  element: <EventDetailsPage/>, action: eventDetailsAction },
-                            { path: 'edit', element: <EditEventPage/>, action: createUpdateEvent }
-                        ]
-                    },
-                    //Register an action
-                    //Actions are called whenever the app sends a non-get submission ("post", "put", "patch", "delete") = form events
-                    { path: 'new', element: <NewEventPage/>, action: createUpdateEvent }
-                ]
+              index: true,
+              element: <EventsPage />,
+              loader: eventsLoader,
             },
             {
-                path: 'newsletter',
-                element: <NewsletterPage />,
-                action: newsletterAction,
+              path: ':eventId',
+              id: 'event-detail',
+              loader: eventDetailLoader,
+              children: [
+                {
+                  index: true,
+                  element: <EventDetailPage />,
+                  action: deleteEventAction,
+                },
+                {
+                  path: 'edit',
+                  element: <EditEventPage />,
+                  action: manipulateEventAction,
+                },
+              ],
             },
-        ]
-    }
-]);
+            {
+              path: 'new',
+              element: <NewEventPage />,
+              action: manipulateEventAction,
+            },
+          ],
+        },
+        {
+          path: 'newsletter',
+          element: <NewsletterPage />,
+          action: newsletterAction,
+        },
+      ],
+    },
+  ]);
 
 function App() {
     return (

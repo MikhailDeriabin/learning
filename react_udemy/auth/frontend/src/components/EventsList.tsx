@@ -1,12 +1,16 @@
+// import { useLoaderData } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
 import classes from './EventsList.module.css';
-import {EventT} from "../types/EventT";
-import {Link} from "react-router-dom";
+import { EventT } from '../types/EventT';
 
 type Props = {
-    events: EventT[];
+  events: EventT[];
 }
 
 function EventsList({events}: Props) {
+  // const events = useLoaderData();
+
   return (
     <div className={classes.events}>
       <h1>All Events</h1>

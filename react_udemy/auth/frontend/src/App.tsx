@@ -12,6 +12,7 @@ import NewEventPage from './pages/NewEventPage';
 import RootLayout from './pages/RootLayout';
 import { action as manipulateEventAction } from './components/EventForm';
 import NewsletterPage, { action as newsletterAction } from './pages/NewsletterPage';
+import AuthenticationPage from "./pages/AuthenticationPage";
 
 const router = createBrowserRouter([
     {
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
           element: <NewsletterPage />,
           action: newsletterAction,
         },
+        {
+          path: 'auth',
+          element: <AuthenticationPage />
+        }
       ],
     },
   ]);

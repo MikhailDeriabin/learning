@@ -23,7 +23,7 @@ const router = createBrowserRouter([
                 element: <EventLayout/>,
                 children: [
                     //u can specify the loader func, which is kinda pre-hook, which executes before the page is rendered
-                    //The loader func should return the value u want to receive in the component
+                    //The loader func should returns a value u want to receive in the component
                     { index: true, element: <EventsPage/>, loader: loadEvents },
                     {
                         path: ':id',

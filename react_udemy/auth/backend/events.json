@@ -1,12 +1,1 @@
-{
-  "events": [
-    {
-      "title": "A new event",
-      "image": "https://www.eventbrite.co.uk/blog/wp-content/uploads/2022/06/how-to-plan-an-event.png",
-      "date": "2022-10-01",
-      "description": "Some awesome event!",
-      "id": "2a42fcc4-ea21-4bdd-abf6-c40006dc66a9"
-    }
-  ],
-  "users": []
-}
+{"events":[{"title":"A new event!","image":"https://www.eventbrite.co.uk/blog/wp-content/uploads/2022/06/how-to-plan-an-event.png","date":"2022-10-01","description":"Some awesome event","id":"2a42fcc4-ea21-4bdd-abf6-c40006dc66a9"},{"title":"Tech Conference 2024","image":"https://www.eventbrite.co.uk/blog/wp-content/uploads/2022/06/how-to-plan-an-event.png","date":"2024-07-15","description":"Join industry leaders to discuss the future of technology.","id":"1a34bcc4-da21-4bcd-abf7-c40006dc1234"},{"title":"Art & Culture Festival","image":"https://www.eventbrite.co.uk/blog/wp-content/uploads/2022/06/how-to-plan-an-event.png","date":"2024-08-10","description":"A celebration of art, music, and culture from around the world.","id":"2b35dcd5-eb32-4cde-bcf8-d50007ed2345"},{"title":"Food Expo 2024","image":"https://www.eventbrite.co.uk/blog/wp-content/uploads/2022/06/how-to-plan-an-event.png","date":"2024-10-05","description":"Discover and taste foods from around the globe.","id":"4d47efe7-gd54-4efg-deh0-f70009gf4567"},{"title":"Music Concert Series","image":"https://www.eventbrite.co.uk/blog/wp-content/uploads/2022/06/how-to-plan-an-event.png","date":"2024-11-25","description":"Live performances by top artists across different genres.","id":"5e58fgf8-he65-5fgh-efj1-g80010hg5678"}],"users":[{"email":"lol@lol.ru","password":"$2a$12$KTO7gb6EWFUWwlupafAvGu7u/G0vYV42i5/ZjpoZ9KTwSaymz0YWm","id":"6db657b4-d5a1-4e94-8e63-9bf8bf9854e9"}]}

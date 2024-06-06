@@ -11,6 +11,7 @@ import {
 import classes from './EventForm.module.css';
 import { HTTPMethod } from '../types/HTTPMethod';
 import { EventT } from '../types/EventT';
+import { getAuthToken } from '../util/auth';
 
 type Props = {
   method: HTTPMethod,
@@ -113,6 +114,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     method: method,
     headers: {
       'Content-Type': 'application/json',
+      'Authorization': `Bearer ${getAuthToken()}`
     },
     body: JSON.stringify(eventData),
   });

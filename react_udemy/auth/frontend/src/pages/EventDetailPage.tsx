@@ -11,6 +11,7 @@ import {
 import EventItem from '../components/EventItem';
 import EventsList from '../components/EventsList';
 import { EventT } from '../types/EventT';
+import { getAuthToken } from '../util/auth';
 
 function EventDetailPage() {
   const { event, events } = useRouteLoaderData('event-detail') as {event: EventT, events: EventT[]};
@@ -82,6 +83,9 @@ export const action: ActionFunction = async ({request, params}) => {
   const eventId = params.eventId;
   const response = await fetch('http://localhost:8080/events/' + eventId, {
     method: request.method,
+    headers: {
+      'Authorization': `Bearer ${getAuthToken()}`
+    }
   });
 
   if (!response.ok) {

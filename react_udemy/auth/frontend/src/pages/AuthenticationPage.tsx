@@ -17,9 +17,7 @@ export const AuthenticationPageAction: ActionFunction = async function ({request
         password: data.get('password'),
     }
 
-    const url = `http//:localhost:8080/${mode}`;
-    console.log(url);
-    const resp = await fetch(url, {
+    const resp = await fetch(`http://localhost:8080/${mode}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -33,5 +31,10 @@ export const AuthenticationPageAction: ActionFunction = async function ({request
     if(!resp.ok)
         throw json({message: 'Can not auth user'}, {status: 500});
     
+    const respData = await resp.json();
+    const { token } = respData;
+
+    localStorage.setItem('authToken', token);
+
     return redirect('/');
 }

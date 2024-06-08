@@ -13,12 +13,19 @@ import RootLayout from './pages/RootLayout';
 import { action as manipulateEventAction } from './components/EventForm';
 import NewsletterPage, { action as newsletterAction } from './pages/NewsletterPage';
 import AuthenticationPage, { AuthenticationPageAction } from "./pages/AuthenticationPage";
+import logout from "./pages/Logout";
+import { checkAuthLoader, tokenLoader } from "./util/auth";
+import { loader } from './pages/EventDetailPage';
 
 const router = createBrowserRouter([
     {
       path: '/',
       element: <RootLayout />,
       errorElement: <ErrorPage />,
+      // Updates the state of the token automatically
+      loader: tokenLoader,
+      //For getting data from that loader function in children, works kinda like context API
+      id: 'root',
       children: [
         { index: true, element: <HomePage /> },
         {
@@ -44,6 +51,7 @@ const router = createBrowserRouter([
                   path: 'edit',
                   element: <EditEventPage />,
                   action: manipulateEventAction,
+                  loader: checkAuthLoader
                 },
               ],
             },
@@ -51,6 +59,7 @@ const router = createBrowserRouter([
               path: 'new',
               element: <NewEventPage />,
               action: manipulateEventAction,
+              loader: checkAuthLoader
             },
           ],
         },
@@ -63,6 +72,10 @@ const router = createBrowserRouter([
           path: 'auth',
           element: <AuthenticationPage />,
           action: AuthenticationPageAction
+        },
+        {
+          path: 'logout',
+          action: logout
         }
       ],
     },

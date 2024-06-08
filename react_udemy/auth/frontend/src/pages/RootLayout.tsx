@@ -4,7 +4,6 @@ import MainNavigation from '../components/MainNavigation';
 
 function RootLayout() {
   // const navigation = useNavigation();
-
   return (
     <>
       <MainNavigation />

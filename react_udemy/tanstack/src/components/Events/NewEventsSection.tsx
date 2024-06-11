@@ -1,57 +1,40 @@
-import { useEffect, useState } from 'react';
-
 import LoadingIndicator from '../UI/LoadingIndicator';
 import ErrorBlock from '../UI/ErrorBlock';
 import EventItem from './EventItem';
+import { useQuery } from '@tanstack/react-query';
+import { fetchEvents } from '../../util/http';
 import { APIError } from '../../types/APIError';
 import { Event } from '../../types/Event';
 
 export default function NewEventsSection() {
-  const [data, setData] = useState<Event[]>();
-  const [error, setError] = useState<Error>();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  useEffect(() => {
-    async function fetchEvents() {
-      setIsLoading(true);
-      const response = await fetch('http://localhost:3000/events');
-
-      if (!response.ok) {
-        const error: APIError = {
-          code: response.status,
-          info: await response.json(),
-          message: 'An error occurred while fetching the events'
-        }
-
-        throw error;
-      }
-
-      const { events } = await response.json();
-
-      return events;
-    }
-
-    fetchEvents()
-      .then((events) => {
-        setData(events);
-      })
-      .catch((error) => {
-        setError(error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, []);
-
   let content;
 
-  if (isLoading) {
+  // make a http query, returns an objects with a lot of params
+  // Notice that components using this hook must be wrapped with a query provider
+  // It does make a query on each page load, but if the data already was fetched before, it will return it first from the cache
+  //and then if there were any changes of the data it will update the cached data automatically in UI and in memory
+  const { data, isPending, isError, error } = useQuery<Event[], APIError>({
+    queryFn: fetchEvents,
+    // For determining which query already been sent, for caching data.
+    // U can use any identifiers and any datatypes here
+    queryKey: ['events'],
+
+    //U can optimize for how long page can be unfocused before reload,
+    //For example if u go to the other page for 5s and then go back to this page, the data will not be re-fetched from backend
+    //Value is in ms, default is 0
+    staleTime: 5000,
+
+    //garbage collector time, for how long data should be cached in ms, default 5 min
+    gcTime: 10000
+  });
+
+  if(isPending) {
     content = <LoadingIndicator />;
   }
 
-  if (error) {
+  if(isError) {
     content = (
-      <ErrorBlock title="An error occurred" message="Failed to fetch events" />
+      <ErrorBlock title="An error occurred" message={error.info?.message ?? "Failed to fetch events"} />
     );
   }
 

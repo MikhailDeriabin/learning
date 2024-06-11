@@ -1,5 +1,7 @@
 export type APIError = {
     code: number,
-    info: string,
+    info: {
+        message?: string
+    },
     message: string
 }

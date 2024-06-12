@@ -2,6 +2,12 @@ import { FormEvent, ReactNode, useState } from 'react';
 
 import ImagePicker from '../ImagePicker';
 import { Event } from '../../types/Event';
+import { fetchImages } from '../../util/http';
+import { useQuery } from '@tanstack/react-query';
+import { APIError } from '../../types/APIError';
+import { Image } from '../../types/Image';
+import ErrorBlock from '../UI/ErrorBlock';
+import LoadingIndicator from '../UI/LoadingIndicator';
 
 type Props = {
   inputData: Event | null,
@@ -11,6 +17,11 @@ type Props = {
 
 export default function EventForm({ inputData, onSubmit, children }: Props) {
   const [selectedImage, setSelectedImage] = useState<string | undefined>(inputData?.image);
+
+  const {isPending: isImgPending, data, isError: isImgError, error: imgError} = useQuery<Image[], APIError>({
+    queryFn: fetchImages,
+    queryKey: ['images']
+  });
 
   function handleSelectImage(imagePath?: string) {
     setSelectedImage(imagePath);
@@ -39,11 +50,13 @@ export default function EventForm({ inputData, onSubmit, children }: Props) {
       </p>
 
       <div className="control">
-        <ImagePicker
-          images={[]}
+        {!isImgPending && <ImagePicker
+          images={data}
           onSelect={handleSelectImage}
           selectedImage={selectedImage}
-        />
+        />}
+        {isImgPending && <LoadingIndicator/>}
+        {isImgError && <ErrorBlock title="An error occurred" message={imgError.info?.message ?? "Failed to load images"} />}
       </div>
 
       <p className="control">

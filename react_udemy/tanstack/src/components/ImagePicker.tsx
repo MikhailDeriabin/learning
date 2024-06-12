@@ -1,7 +1,7 @@
 import { Image } from "../types/Image";
 
 type Props = {
-  images: Image[], 
+  images?: Image[], 
   selectedImage?: string, 
   onSelect: (imagePath: string) => void
 }
@@ -11,7 +11,7 @@ export default function ImagePicker({ images, selectedImage, onSelect }: Props) 
     <div id="image-picker">
       <p>Select an image</p>
       <ul>
-        {images.map((image) => (
+        {images && images.map((image) => (
           <li
             key={image.path}
             onClick={() => onSelect(image.path)}

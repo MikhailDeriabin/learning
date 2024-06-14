@@ -2,7 +2,7 @@ import { ReactNode, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
 type Props = {
-  children: ReactNode,
+  children?: ReactNode,
   onClose: () => void
 }
 

@@ -117,3 +117,23 @@ export async function fetchEvents({signal, search}: Params) {
   
     return response.json();
   }
+
+  export async function updateEvent({ id, event }: {id: string, event: Event}) {
+    const response = await fetch(`http://localhost:3000/events/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify({ event }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  
+    if (!response.ok) {
+      throw {
+        code: response.status,
+        info: await response.json(),
+        message: 'An error occurred while updating the event'
+      }
+    }
+  
+    return response.json();
+  }

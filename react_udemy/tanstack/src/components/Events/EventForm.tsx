@@ -10,7 +10,7 @@ import ErrorBlock from '../UI/ErrorBlock';
 import LoadingIndicator from '../UI/LoadingIndicator';
 
 type Props = {
-  inputData: Event | null,
+  inputData: Event | null | undefined,
   children?: ReactNode,
   onSubmit: (data: Event) => void
 }

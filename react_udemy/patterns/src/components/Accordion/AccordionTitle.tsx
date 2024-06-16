@@ -1,15 +1,16 @@
 import { ReactNode } from "react";
 import { useAccordionContext } from "./Accordion";
+import { useAccordionItemContext } from "./AccordionItem";
 
 type Props = {
-    id: string,
     className?: string,
     children?: ReactNode,
 }
 //This is a compound component, which is meant to be use with other components
 //Example of compound components might be select and option HTML tags
-export default function AccordionTitle({id, className, children}: Props) {
+export default function AccordionTitle({className, children}: Props) {
     const {openItemId, openItem, closeItem} = useAccordionContext();
+    const { id } = useAccordionItemContext();
 
     const isOpen = id === openItemId;
 
@@ -21,6 +22,6 @@ export default function AccordionTitle({id, className, children}: Props) {
     }
 
     return(
-        <h3 onClick={handleClick} className={isOpen ? `${className ?? ''} open` : `${className ?? ''}`}>{children}</h3>
+        <div onClick={handleClick} className={isOpen ? `${className ?? ''} open` : `${className ?? ''}`}>{children}</div>
     );
 }

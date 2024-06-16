@@ -1,15 +1,16 @@
 import { ReactNode } from "react";
 import { useAccordionContext } from "./Accordion";
+import { useAccordionItemContext } from "./AccordionItem";
 
 type Props = {
-    id: string,
     children?: ReactNode,
     className?: string
 }
 //This is a compound component, which is meant to be use with other components
 //Example of compound components might be select and option HTML tags
-export default function AccordionContent({id, children, className}: Props) {
+export default function AccordionContent({children, className}: Props) {
     const {openItemId} = useAccordionContext();
+    const { id } = useAccordionItemContext();
 
     const isOpen = id === openItemId;
 

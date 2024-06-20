@@ -10,6 +10,15 @@ dist/
 build/
 *.log
 *.tsbuildinfo
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+dist-ssr
+*.local
 
 # TypeScript - Specific ignore patterns
 *.js.map
@@ -97,6 +106,17 @@ ios/build/
 android/.gradle
 android/build/
 android/app/build/
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
 # Watchman
 .watchmanconfig

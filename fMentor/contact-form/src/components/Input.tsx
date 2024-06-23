@@ -1,20 +1,27 @@
 import {Properties} from "csstype";
 import { createContext, useContext, useState, ReactNode } from 'react';
+import InputLabel from "./InputLabel";
+import InputError from "./InputError";
+import InputField from "./InputField";
 
 type TContextData = {
-    value?: string
+    id: string,
+    value?: string | null
 }
-const DefaultContextData: TContextData = {}
+const defaultContextData: TContextData = {
+    id: 'id is not specified for Input component',
+    value: undefined
+}
 
 type TContextValue = {
-    onBlur: (value: string) => any,
-    validate?: (value: string) => string,
+    onBlur: (id: string, value: string | null) => any,
+    validate?: (id: string, value: string | null) => string,
 
-    setValue: (value: string) => any
+    setValue: (value: string | null) => any
 } & TContextData;
 
 const DefaultContextValue: TContextValue = {
-    ...DefaultContextData,
+    ...defaultContextData,
     onBlur: mockFn(),
     validate: mockFn(),
 
@@ -31,18 +38,19 @@ export function useInputContext(){
 }
 
 type Props = {
-    onBlur: (value: string) => any,
+    onBlur: (id: string, value: string | null) => any,
+    id: string,
 
-    validationFn?: (value: string) => string
+    validationFn?: (id: string, value: string | null) => string
 
     className?: string,
-    styles?: Properties,
+    style?: Properties,
     children?: ReactNode
 }
-export default function Input({onBlur, validationFn, className, styles, children}: Props) {
-    const [contextData, setContextData] = useState<TContextData>(DefaultContextData);
+export default function Input({onBlur, validationFn, className, style, children}: Props) {
+    const [contextData, setContextData] = useState<TContextData>(defaultContextData);
 
-    function handleSetValue(value: string) {
+    function handleSetValue(value: string | null) {
         setContextData({...contextData, value});
     }
 
@@ -55,14 +63,18 @@ export default function Input({onBlur, validationFn, className, styles, children
 
     return(
         <Context.Provider value={contextValue}>
-            <div className={`${className}`}>
+            <div className={`${className}`} style={style}>
                 {children}
             </div>
         </Context.Provider>
     );
 }
 
-function mockFn(): (...params: any) => any {
+Input.Label = InputLabel;
+Input.Field = InputField;
+Input.Error = InputError;
+
+function mockFn(): () => any {
     const warnMsg = 'This is a mock function. Please check that u are using it inside the Input context Provider';
     return () => { 
         console.warn(warnMsg);

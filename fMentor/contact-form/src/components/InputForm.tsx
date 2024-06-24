@@ -1,58 +1,95 @@
 import {Properties} from "csstype";
 import { createContext, useContext, useState, ReactNode } from 'react';
 
+type Id = string;
+type Value = string | null | undefined;
+type Error = string | null;
 type TContextData = {
-    values: Record<string, string>
+    values: Record<Id, Value>,
+    submitTrigger: boolean,
+
+    errors: Record<Id, Error>,
+    validateTrigger: boolean
 }
 const defaultContextData: TContextData = {
-    values: {} 
+    values: {},
+    submitTrigger: false,
+
+    errors: {},
+    validateTrigger: false
 }
 
 type TContextValue = {
-    onSubmit: (values: Record<string, string>) => any,
-    validate?: (values: Record<string, string>) => Record<string, string>,
-
-    setValue: (id: string, value: string | null) => any
+    onSubmit: () => any,
+    setValue: (id: Id, value: Value) => any,
+    setError: (id: Id, error: Error) => any
 } & TContextData;
 
 const defaultContextValue: TContextValue = {
     ...defaultContextData,
     onSubmit: mockFn(),
-    validate: mockFn(),
 
-    setValue: mockFn()
+    setValue: mockFn(),
+    setError: mockFn()
 }
 
 const Context = createContext<TContextValue>(defaultContextValue);
-export function useInputFormContext(){
+export function useInputFormContext(): TContextValue | null{
     const ctx = useContext(Context);
     if(!ctx)
-        throw new Error('InputForm context is not defined here. Check that this component is wrapped with the context Provider');
-
+        return null;
+    
     return ctx;
 }
 
 type Props = {
-    onSubmit: (values: Record<string, string>) => any,
-
-    validationFn?: (values: Record<string, string>) => Record<string, string>,
+    onSubmit: (areErrors: boolean, values: Record<Id, Value>) => any,
 
     className?: string,
     style?: Properties,
-    children?: ReactNode
+    children: ReactNode
 }
-export default function InputForm({onSubmit, validationFn, className, style, children}: Props) {
+export default function InputForm({onSubmit, className, style, children}: Props) {
     const [contextData, setContextData] = useState<TContextData>(defaultContextData);
 
-    function handleSetValue(id: string, value: string | null) {
-        setContextData({...contextData, [id]: value});
+    function handleSetValue(id: Id, value: Value) {
+        setContextData({
+            ...contextData, 
+            values: {
+                ...contextData.values,
+                [id]: value
+            }     
+        });
+    }
+
+    function handleSetError(id: Id, error: Error) {
+        setContextData({
+            ...contextData, 
+            errors: {
+                ...contextData.errors,
+                [id]: error
+            }
+        });
+    }
+
+    function handleSubmit() {
+        setContextData((prevState) => {
+            return {
+                ...prevState,
+                validateTrigger: true,
+                submitTrigger: true
+            }  
+        });
+
+        const areErrors = Object.values(contextData.errors).some(v => v !== null);
+        onSubmit(areErrors, areErrors ? contextData.errors : contextData.values);
     }
 
     const contextValue: TContextValue = {
         ...contextData,
-        onSubmit,
-        validate: validationFn,
-        setValue: handleSetValue
+        onSubmit: handleSubmit,
+        setValue: handleSetValue,
+        setError: handleSetError
     }
 
     return(
@@ -66,9 +103,9 @@ export default function InputForm({onSubmit, validationFn, className, style, chi
 
 
 function mockFn(): () => any {
-    const warnMsg = 'This is a mock function. Please check that u are using it inside the Input context Provider';
+    const warnMsg = 'This is a mock function. Please check that u are using it inside the InputForm context Provider or that it is properly defined';
     return () => { 
-        console.warn(warnMsg);
+        console.error(warnMsg);
         return;
     }
 }

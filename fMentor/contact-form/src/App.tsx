@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import './App.css';
 import Input from './components/Input';
+import InputForm from './components/InputForm';
+import InputSubmit from './components/InputSubmit';
 
 function App() {
-    const [formData, setFormData] = useState<Record<string, string | null>>({
+    const [formData, setFormData] = useState<Record<string, string | null | undefined>>({
         firstName: '',
         lastName: '',
         email: '',
@@ -16,8 +18,15 @@ function App() {
         setFormData({...formData, id: value});
     }
 
+    let error = '';
+    function handleSubmit(areErrors: boolean, values: Record<string, string | null | undefined>) {
+        if(!areErrors)
+            setFormData(values);
+
+        error = 'Some errors occurred, please check the form';
+    }
+
     function validateNotEmpty(id: string, value: string | null) {
-        console.log(value, !value);
         if(!value)
             return 'The field is required';
 
@@ -26,27 +35,37 @@ function App() {
 
     return (
     <div>
-        <Input 
-            id="firstName" 
-            onBlur={handleFormChange}
-            validationFn={validateNotEmpty}
-        >
-            <Input.Label text="First Name *"></Input.Label>
-            <Input.Field/>
-            <Input.Error />
-        </Input>
-        <Input id="lastName" onBlur={handleFormChange}>
-            <Input.Label text="Last Name *"></Input.Label>
-        </Input>
-        <Input id="email" onBlur={handleFormChange}>
-            <Input.Label text="Email Address *"></Input.Label>
-        </Input>
-        <Input id="query" onBlur={handleFormChange}>
-            <Input.Label text="Query Type *"></Input.Label>
-        </Input>
-        <Input id="message" onBlur={handleFormChange}>
-            <Input.Label text="Message *"></Input.Label>
-        </Input>
+        {error}
+        <InputForm onSubmit={handleSubmit}>
+            <Input 
+                id="firstName" 
+                onBlur={handleFormChange}
+                validationFn={validateNotEmpty}
+            >
+                <Input.Label text="First Name *" />
+                <Input.Field />
+                <Input.Error />    
+            </Input>
+            <Input 
+                id="lastName" 
+                onBlur={handleFormChange}
+                validationFn={validateNotEmpty}
+            >
+                <Input.Label text="Last Name *"/>
+                <Input.Field />
+                <Input.Error /> 
+            </Input>
+            <Input id="email" onBlur={handleFormChange}>
+                <Input.Label text="Email Address *"/>
+            </Input>
+            <Input id="query" onBlur={handleFormChange}>
+                <Input.Label text="Query Type *"/>
+            </Input>
+            <Input id="message" onBlur={handleFormChange}>
+                <Input.Label text="Message *"/>
+            </Input>
+            <InputSubmit/>
+        </InputForm>
     </div>
     )
 }

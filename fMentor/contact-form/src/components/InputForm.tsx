@@ -1,5 +1,5 @@
 import {Properties} from "csstype";
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, ReactNode, FormEvent, useEffect } from 'react';
 
 type Id = string;
 type Value = string | null | undefined;
@@ -79,10 +79,26 @@ export default function InputForm({onSubmit, className, style, children}: Props)
                 validateTrigger: true,
                 submitTrigger: true
             }  
-        });
+        });   
+    }
 
-        const areErrors = Object.values(contextData.errors).some(v => v !== null);
-        onSubmit(areErrors, areErrors ? contextData.errors : contextData.values);
+    useEffect(() => {
+        if(contextData.submitTrigger){
+            const areErrors = Object.values(contextData.errors).some(v => v !== null);
+            onSubmit(areErrors, areErrors ? contextData.errors : contextData.values);
+    
+            setContextData((prevState) => {
+                return {
+                    ...prevState,
+                    validateTrigger: false,
+                    submitTrigger: false
+                }  
+            });
+        }
+    }, [contextData.submitTrigger]);
+
+    function preventFormSubmit(e: FormEvent<HTMLFormElement>){
+        e.preventDefault();
     }
 
     const contextValue: TContextValue = {
@@ -94,7 +110,7 @@ export default function InputForm({onSubmit, className, style, children}: Props)
 
     return(
         <Context.Provider value={contextValue}>
-            <form className={`${className}`} style={style}>
+            <form onSubmit={preventFormSubmit} className={`${className}`} style={style}>
                 {children}
             </form>
         </Context.Provider>

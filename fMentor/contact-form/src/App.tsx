@@ -15,7 +15,7 @@ function App() {
     });
 
     function handleFormChange(id: string, value: string | null) {
-        setFormData({...formData, id: value});
+       // setFormData({...formData, id: value});
     }
 
     let error = '';
@@ -53,7 +53,6 @@ function App() {
             >
                 <Input.Label text="Last Name *"/>
                 <Input.Field />
-                <Input.Error /> 
             </Input>
             <Input id="email" onBlur={handleFormChange}>
                 <Input.Label text="Email Address *"/>

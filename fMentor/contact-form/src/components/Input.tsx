@@ -1,5 +1,5 @@
 import {Properties} from "csstype";
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import InputLabel from "./InputLabel";
 import InputError from "./InputError";
 import InputField from "./InputField";
@@ -8,20 +8,19 @@ import { useInputFormContext } from "./InputForm";
 type TContextData = {
     id: string,
     value?: string | null,
-    error: string | null
+    validationTrigger: boolean
 }
 const defaultContextData: TContextData = {
     id: 'id is not specified for Input component',
     value: undefined,
-    error: null
+    validationTrigger: false
 }
 
 type TContextValue = {
     onBlur: (id: string, value: string | null) => any,
     validate?: (id: string, value: string | null) => string,
 
-    setValue: (value: string | null) => any,
-    setError: (error: string | null) => any
+    setValue: (value: string | null) => any
 } & TContextData;
 
 const DefaultContextValue: TContextValue = {
@@ -29,8 +28,7 @@ const DefaultContextValue: TContextValue = {
     onBlur: mockFn(),
     validate: mockFn(),
 
-    setValue: mockFn(),
-    setError: mockFn()
+    setValue: mockFn()
 }
 
 const Context = createContext<TContextValue>(DefaultContextValue);
@@ -62,31 +60,32 @@ export default function Input({id, onBlur, validationFn, className, style, child
         setContextData({...contextData, value});
     }
 
-    function handleSetError(error: string | null) {
-        setContextData({...contextData, error});
-    }
-
     const contextValue: TContextValue = {
         ...contextData,
         onBlur,
         validate: validationFn,
-        setValue: handleSetValue,
-        setError: handleSetError
+        setValue: handleSetValue
     }
 
     const formCtx = useInputFormContext();
-    if(formCtx){
+
+    useEffect(() => {
+        if(!formCtx)
+            return;
+
         const { submitTrigger, validateTrigger, setValue, setError } = formCtx;
-        if(submitTrigger)
-            setValue(id, contextData.value);
 
         if(validationFn && validateTrigger){
             const currentValue = contextData.value === undefined ? null : contextData.value;
             const error = validationFn(id, currentValue);
             setError(id, error);
         }
-            
-    }
+        setContextData({...contextData, validationTrigger: validateTrigger});
+
+        if(submitTrigger)
+            setValue(id, contextData.value);
+        
+    }, [formCtx?.validateTrigger, formCtx?.submitTrigger]);
 
     return(
         <Context.Provider value={contextValue}>

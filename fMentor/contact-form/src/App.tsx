@@ -5,28 +5,30 @@ import InputForm from './components/InputForm';
 import InputSubmit from './components/InputSubmit';
 
 function App() {
-    const [formData, setFormData] = useState<Record<string, string | null | undefined>>({
+    /* const [formData, setFormData] = useState<Record<string, string | null | undefined>>({
         firstName: '',
         lastName: '',
         email: '',
         query: '',
         message: '',
         consent: 'false',
-    });
+    }); */
 
-    function handleFormChange(id: string, value: string | null) {
+    function handleFormChange(isError:boolean, id: string, value: string | null) {
        // setFormData({...formData, id: value});
     }
 
     let error = '';
     function handleSubmit(areErrors: boolean, values: Record<string, string | null | undefined>) {
+        console.log(areErrors, values);
         if(!areErrors)
-            setFormData(values);
+            //setFormData(values);
+            error = 'Got values successfully';
 
         error = 'Some errors occurred, please check the form';
     }
 
-    function validateNotEmpty(id: string, value: string | null) {
+    function validateNotEmpty(id: string, value?: string) {
         if(!value)
             return 'The field is required';
 
@@ -54,7 +56,8 @@ function App() {
                 <Input.Label text="Last Name *"/>
                 <Input.Field />
             </Input>
-            <Input id="email" onBlur={handleFormChange}>
+
+            {/* <Input id="email" onBlur={handleFormChange}>
                 <Input.Label text="Email Address *"/>
             </Input>
             <Input id="query" onBlur={handleFormChange}>
@@ -62,7 +65,7 @@ function App() {
             </Input>
             <Input id="message" onBlur={handleFormChange}>
                 <Input.Label text="Message *"/>
-            </Input>
+            </Input> */}
             <InputSubmit/>
         </InputForm>
     </div>

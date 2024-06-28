@@ -1,6 +1,5 @@
 import { Properties } from 'csstype';
 import { useInputFormContext } from './InputForm';
-import { FormEvent } from 'react';
 
 type Props = {
     className?: string,
@@ -12,9 +11,9 @@ export default function InputSubmit({className, style}: Props) {
     if(!formCtx)
         return <p>Wrap the InputSubmit with InputForm component, overwise it can not be used</p>
 
-    const { onSubmit } = formCtx;
+    const { onSubmitButtonClick } = formCtx;
 
     return(
-        <button id="submit-btn" onClick={onSubmit} className={`${className}`} style={style}>Submit</button>
+        <button id="submit-btn" onClick={onSubmitButtonClick} className={`${className}`} style={style}>Submit</button>
     );
 }

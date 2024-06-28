@@ -5,30 +5,33 @@ import InputError from "./InputError";
 import InputField from "./InputField";
 import { useInputFormContext } from "./InputForm";
 
+type Id = string;
+type Value = string | undefined;
+type Error = string | undefined;
 type TContextData = {
-    id: string,
-    value?: string | null,
-    validationTrigger: boolean
+    id: Id,
+    value: Value,
+    error: Error
 }
 const defaultContextData: TContextData = {
-    id: 'id is not specified for Input component',
+    id: 'Id field is not defined. Please define an id for the Input component',
     value: undefined,
-    validationTrigger: false
+    error: undefined
 }
 
 type TContextValue = {
-    onBlur: (id: string, value: string | null) => any,
-    validate?: (id: string, value: string | null) => string,
+    validate: (id: Id, value: Value) => string,
 
-    setValue: (value: string | null) => any
+    handleBlur: () => any,
+    handleChange: (value: Value) => any
 } & TContextData;
 
 const DefaultContextValue: TContextValue = {
     ...defaultContextData,
-    onBlur: mockFn(),
     validate: mockFn(),
 
-    setValue: mockFn()
+    handleBlur: mockFn(),
+    handleChange: mockFn()
 }
 
 const Context = createContext<TContextValue>(DefaultContextValue);
@@ -41,10 +44,10 @@ export function useInputContext(){
 }
 
 type Props = {
-    onBlur: (id: string, value: string | null) => any,
-    id: string,
+    onBlur: (isError: boolean, id: Id, value: string) => any,
+    id: Id,
 
-    validationFn?: (id: string, value: string | null) => string
+    validationFn: (id: Id, value: Value) => string
 
     className?: string,
     style?: Properties,
@@ -56,40 +59,48 @@ export default function Input({id, onBlur, validationFn, className, style, child
         id
     });
 
-    function handleSetValue(value: string | null) {
-        setContextData({...contextData, value});
+    function handleBlur() {
+        if(contextData.error)
+            onBlur(true, id, contextData.error);
+
+        onBlur(false, id, contextData.value ?? '');
+    }
+
+    function handleChange(value: Value) {
+        const error = validationFn(id, value);
+        if(error)
+            return setContextData(() => { return {value, error, id}});
+
+        setContextData({value, error: undefined, id});
     }
 
     const contextValue: TContextValue = {
         ...contextData,
-        onBlur,
         validate: validationFn,
-        setValue: handleSetValue
+
+        handleBlur,
+        handleChange
     }
+    
 
     const formCtx = useInputFormContext();
 
     useEffect(() => {
-        if(!formCtx)
+        if(!formCtx || !formCtx.submitTrigger)
             return;
 
-        const { submitTrigger, validateTrigger, setValue, setError } = formCtx;
+        const { handleSubmit } = formCtx;
 
-        if(validationFn && validateTrigger){
-            const currentValue = contextData.value === undefined ? null : contextData.value;
-            const error = validationFn(id, currentValue);
-            setError(id, error);
-        }
-        setContextData({...contextData, validationTrigger: validateTrigger});
+        const error = validationFn(id, contextData.value);
+        handleSubmit(id, contextData.value, error);
 
-        if(submitTrigger)
-            setValue(id, contextData.value);
-        
-    }, [formCtx?.validateTrigger, formCtx?.submitTrigger]);
+        if(error)
+            setContextData({...contextData, error});
+    }, [formCtx?.submitTrigger]);
 
     return(
         <Context.Provider value={contextValue}>
-            <div className={`${className}`} style={style}>
+            <div className={`${className}`} style={style} data-input-wrapper-id={`${id}`}>
                 {children}
             </div>
         </Context.Provider>

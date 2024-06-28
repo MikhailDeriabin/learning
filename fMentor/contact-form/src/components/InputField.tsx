@@ -7,17 +7,10 @@ type Props = {
     style?: Properties
 }
 export default function InputField({className, style}: Props) {
-    const {onBlur, value, id, setValue} = useInputContext();
+    const {value, handleChange, handleBlur, id} = useInputContext();
 
     function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
-        if(!e.target.value)
-            return setValue(null);
-
-        setValue(e.target.value);
-    }
-
-    function handleBlur() {
-        onBlur(id, value ?? null);
+        handleChange(e.target.value);
     }
 
     return(

@@ -20,7 +20,7 @@ const defaultContextData: TContextData = {
 }
 
 type TContextValue = {
-    validate: (id: Id, value: Value) => string,
+    validate?: (id: Id, value: Value) => string,
 
     handleBlur: () => any,
     handleChange: (value: Value) => any
@@ -28,7 +28,7 @@ type TContextValue = {
 
 const DefaultContextValue: TContextValue = {
     ...defaultContextData,
-    validate: mockFn(),
+    validate: undefined,
 
     handleBlur: mockFn(),
     handleChange: mockFn()
@@ -44,10 +44,10 @@ export function useInputContext(){
 }
 
 type Props = {
-    onBlur: (isError: boolean, id: Id, value: string) => any,
+    onBlur?: (isError: boolean, id: Id, value: string) => any,
     id: Id,
 
-    validationFn: (id: Id, value: Value) => string
+    validationFn?: (id: Id, value: Value) => string
 
     className?: string,
     style?: Properties,
@@ -60,6 +60,9 @@ export default function Input({id, onBlur, validationFn, className, style, child
     });
 
     function handleBlur() {
+        if(!onBlur)
+            return;
+
         if(contextData.error)
             onBlur(true, id, contextData.error);
 
@@ -67,11 +70,11 @@ export default function Input({id, onBlur, validationFn, className, style, child
     }
 
     function handleChange(value: Value) {
-        const error = validationFn(id, value);
-        if(error)
-            return setContextData(() => { return {value, error, id}});
+        if(!validationFn)
+            return setContextData({value, error: undefined, id});
 
-        setContextData({value, error: undefined, id});
+        const error = validationFn(id, value);
+        setContextData(() => { return {value, error, id}});
     }
 
     const contextValue: TContextValue = {
@@ -91,12 +94,24 @@ export default function Input({id, onBlur, validationFn, className, style, child
 
         const { handleSubmit } = formCtx;
 
+        if(!validationFn)
+            return handleSubmit(id, contextData.value, undefined);
+
         const error = validationFn(id, contextData.value);
         handleSubmit(id, contextData.value, error);
 
         if(error)
             setContextData({...contextData, error});
     }, [formCtx?.submitTrigger]);
+
+    useEffect(() => {
+        if(!formCtx || !formCtx.resetTrigger)
+            return;
+
+        const { signalReset } = formCtx;
+        setContextData({...contextData, value: undefined, error: undefined});
+        signalReset(id);
+    }, [formCtx?.resetTrigger, contextData.value, contextData.error]);
 
     return(
         <Context.Provider value={contextValue}>

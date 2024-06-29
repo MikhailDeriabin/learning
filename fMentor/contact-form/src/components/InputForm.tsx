@@ -7,24 +7,28 @@ type Error = string | undefined;
 type TContextData = {
     values: Record<Id, Value>,
     submitTrigger: boolean,
+    resetTrigger: boolean,
 
     errors: Record<Id, Error>
 }
 const defaultContextData: TContextData = {
     values: {},
     submitTrigger: false,
+    resetTrigger: false,
 
     errors: {}
 }
 
 type TContextValue = {
     handleSubmit: (id: Id, value: Value, error: Error) => any,
+    signalReset: (id: Id) => any,
     onSubmitButtonClick: () => void
 } & TContextData;
 
 const defaultContextValue: TContextValue = {
     ...defaultContextData,
     handleSubmit: mockFn(),
+    signalReset: mockFn(),
     onSubmitButtonClick: mockFn()
 }
 
@@ -71,9 +75,22 @@ export default function InputForm({onSubmit, className, style, children}: Props)
                     ...prevState.errors,
                     [id]: error
                 },
-                submitTrigger: prevState.submitTrigger
+                submitTrigger: prevState.submitTrigger,
+                resetTrigger: prevState.resetTrigger
             }  
         });   
+    }
+
+    function signalReset(id: Id) {
+        setContextData((prevState) => {
+            return {
+                ...prevState,
+                values: {
+                    ...prevState.values,
+                    [id]: null
+                }
+            }  
+        });
     }
 
     function onSubmitButtonClick() {
@@ -85,7 +102,6 @@ export default function InputForm({onSubmit, className, style, children}: Props)
     useEffect(() => {
         if(!contextData.submitTrigger)
             return;
-        
             
         if(!areAllValuesSet(contextData.values))
             return;
@@ -99,7 +115,26 @@ export default function InputForm({onSubmit, className, style, children}: Props)
                 submitTrigger: false
             }  
         });
+
+        if(!areErrors)
+            setContextData({...contextData, resetTrigger: true});
     }, [contextData.submitTrigger, contextData.values]);
+
+    useEffect(() => {
+        if(!contextData.resetTrigger)
+            return;
+
+        //if some values set
+        if(areAllValuesSet(contextData.values))
+            return;
+
+        setContextData((prevState) => {
+            return {
+                ...prevState,
+                resetTrigger: false
+            }  
+        });
+    }, [contextData.values, contextData.resetTrigger]);
 
     function preventFormSubmit(e: FormEvent<HTMLFormElement>){
         e.preventDefault();
@@ -108,6 +143,7 @@ export default function InputForm({onSubmit, className, style, children}: Props)
     const contextValue: TContextValue = {
         ...contextData,
         handleSubmit,
+        signalReset,
         onSubmitButtonClick
     }
 

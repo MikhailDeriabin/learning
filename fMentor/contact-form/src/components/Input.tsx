@@ -1,9 +1,8 @@
 import {Properties} from "csstype";
-import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { createContext, useContext, useState, ReactNode, useEffect, forwardRef } from 'react';
 import InputLabel from "./InputLabel";
 import InputError from "./InputError";
 import InputField from "./InputField";
-import { useInputFormContext } from "./InputForm";
 
 type Id = string;
 type Value = string | undefined;
@@ -53,7 +52,9 @@ type Props = {
     style?: Properties,
     children?: ReactNode
 }
-export default function Input({id, onBlur, validationFn, className, style, children}: Props) {
+const InputRef = forwardRef<HTMLInputElement, Props>(
+    ({id, onBlur, validationFn, className, style, children}, ref) => {
+
     const [contextData, setContextData] = useState<TContextData>({
         ...defaultContextData,
         id
@@ -84,47 +85,28 @@ export default function Input({id, onBlur, validationFn, className, style, child
         handleBlur,
         handleChange
     }
-    
-
-    const formCtx = useInputFormContext();
-
-    useEffect(() => {
-        if(!formCtx || !formCtx.submitTrigger)
-            return;
-
-        const { handleSubmit } = formCtx;
-
-        if(!validationFn)
-            return handleSubmit(id, contextData.value, undefined);
-
-        const error = validationFn(id, contextData.value);
-        handleSubmit(id, contextData.value, error);
-
-        if(error)
-            setContextData({...contextData, error});
-    }, [formCtx?.submitTrigger]);
-
-    useEffect(() => {
-        if(!formCtx || !formCtx.resetTrigger)
-            return;
-
-        const { signalReset } = formCtx;
-        setContextData({...contextData, value: undefined, error: undefined});
-        signalReset(id);
-    }, [formCtx?.resetTrigger, contextData.value, contextData.error]);
 
     return(
         <Context.Provider value={contextValue}>
-            <div className={`${className}`} style={style} data-input-wrapper-id={`${id}`}>
+            <div className={`${className}`} style={style} data-input-type="Input">
                 {children}
             </div>
         </Context.Provider>
     );
-}
+});
+
+type InputCompound = typeof InputRef & {
+    Label: typeof InputLabel;
+    Field: typeof InputField;
+    Error: typeof InputError;
+};
+const Input = InputRef as InputCompound;
 
 Input.Label = InputLabel;
 Input.Field = InputField;
 Input.Error = InputError;
+  
+export default Input;
 
 function mockFn(): () => any {
     const warnMsg = 'This is a mock function. Please check that u are using it inside the Input context Provider';

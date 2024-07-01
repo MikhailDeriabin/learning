@@ -19,6 +19,10 @@ pnpm-debug.log*
 lerna-debug.log*
 dist-ssr
 *.local
+.bit/
+.cache/
+coverage/
+.bit.map.json
 
 # TypeScript - Specific ignore patterns
 *.js.map

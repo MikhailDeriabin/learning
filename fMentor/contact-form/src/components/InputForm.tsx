@@ -1,178 +1,58 @@
 import {Properties} from "csstype";
-import { createContext, useContext, useState, ReactNode, FormEvent, useEffect } from 'react';
+import { ReactNode, FormEvent, useRef, isValidElement, Children, cloneElement, ReactElement } from 'react';
+import Input, { InputRefMethods, TInputError, TInputId, TInputValue } from "./Input";
 
-type Id = string;
-type Value = string | undefined | null;
-type Error = string | undefined;
-type TContextData = {
-    values: Record<Id, Value>,
-    submitTrigger: boolean,
-    resetTrigger: boolean,
-
-    errors: Record<Id, Error>
-}
-const defaultContextData: TContextData = {
-    values: {},
-    submitTrigger: false,
-    resetTrigger: false,
-
-    errors: {}
-}
-
-type TContextValue = {
-    handleSubmit: (id: Id, value: Value, error: Error) => any,
-    signalReset: (id: Id) => any,
-    onSubmitButtonClick: () => void
-} & TContextData;
-
-const defaultContextValue: TContextValue = {
-    ...defaultContextData,
-    handleSubmit: mockFn(),
-    signalReset: mockFn(),
-    onSubmitButtonClick: mockFn()
-}
-
-const Context = createContext<TContextValue>(defaultContextValue);
-export function useInputFormContext(): TContextValue | null {
-    const ctx = useContext(Context);
-    if(!ctx)
-        return null;
-    
-    return ctx;
-}
 
 type Props = {
-    onSubmit: (areErrors: boolean, values: Record<Id, Value | Error>) => any,
+    onSubmit: (areErrors: boolean, values: Record<TInputId, TInputValue | TInputError>) => any,
 
     className?: string,
     style?: Properties,
     children: ReactNode
 }
 export default function InputForm({onSubmit, className, style, children}: Props) {
-    const [contextData, setContextData] = useState<TContextData>(defaultContextData);
+    const inputRefs = useRef<Record<TInputId, InputRefMethods>>({});
 
-    useEffect(() => {
-        const inputElems = document.querySelectorAll('div[data-input-wrapper-id]');
-        const inputIds: string[] = [];
-        for(let i=0; i<inputElems.length; i++)
-            inputIds.push(inputElems[i]['dataset']['inputWrapperId']);
-
-        const inputsInitValues = {};
-        for(let i=0; i<inputIds.length; i++)
-            inputsInitValues[inputIds[i]] = null;
-
-        setContextData({...contextData, values: inputsInitValues});
-    }, []);
-
-    function handleSubmit(id: Id, value: Value, error: Error) {
-        setContextData((prevState) => {
-            return {
-                values: {
-                    ...prevState.values,
-                    [id]: value
-                },
-                errors: {
-                    ...prevState.errors,
-                    [id]: error
-                },
-                submitTrigger: prevState.submitTrigger,
-                resetTrigger: prevState.resetTrigger
-            }  
-        });   
-    }
-
-    function signalReset(id: Id) {
-        setContextData((prevState) => {
-            return {
-                ...prevState,
-                values: {
-                    ...prevState.values,
-                    [id]: null
-                }
-            }  
-        });
-    }
-
-    function onSubmitButtonClick() {
-        //Reset values if form is sent more than one time
-        const values = resetValues(contextData.values);
-        setContextData({...contextData, values, errors: {}, submitTrigger: true});
-    }
-
-    useEffect(() => {
-        if(!contextData.submitTrigger)
-            return;
-            
-        if(!areAllValuesSet(contextData.values))
-            return;
-
-        const areErrors = Object.values(contextData.errors).some(v => v !== '');
-        onSubmit(areErrors, areErrors ? contextData.errors : contextData.values);
-
-        setContextData((prevState) => {
-            return {
-                ...prevState,
-                submitTrigger: false
-            }  
-        });
-
-        if(!areErrors)
-            setContextData({...contextData, resetTrigger: true});
-    }, [contextData.submitTrigger, contextData.values]);
-
-    useEffect(() => {
-        if(!contextData.resetTrigger)
-            return;
-
-        //if some values set
-        if(areAllValuesSet(contextData.values))
-            return;
-
-        setContextData((prevState) => {
-            return {
-                ...prevState,
-                resetTrigger: false
-            }  
-        });
-    }, [contextData.values, contextData.resetTrigger]);
-
-    function preventFormSubmit(e: FormEvent<HTMLFormElement>){
+    function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
+        const values: Record<TInputId, TInputValue> = {};
+        const errors: Record<TInputId, TInputError> = {};
+        for(let inputId in inputRefs.current){
+            const input = inputRefs.current[inputId];
+            const [id, value] = input.getIdAndValue();
+            values[id] = value;
+
+            const error = input.validate();
+            if(error)
+                errors[id] = error;
+        }
+
+        if(Object.keys(errors).length !== 0)
+            return onSubmit(true, errors);
+
+        onSubmit(false, values);
+
+        for(let inputId in inputRefs.current)
+            inputRefs.current[inputId].resetValue();
     }
 
-    const contextValue: TContextValue = {
-        ...contextData,
-        handleSubmit,
-        signalReset,
-        onSubmitButtonClick
-    }
+    const clonedChildren = Children.map(children, (child) => {
+        if(!isValidElement(child) || child.type !== Input)
+            return child;
+
+        return cloneElement(child as ReactElement<any>, {
+            ref: (elem: InputRefMethods) => {
+                if(elem){
+                    const [id] = elem.getIdAndValue();
+                    inputRefs.current[id] = elem;
+                }
+            }
+        });
+    });
 
     return(
-        <Context.Provider value={contextValue}>
-            <form onSubmit={preventFormSubmit} className={`${className}`} style={style}>
-                {children}
-            </form>
-        </Context.Provider>
+        <form onSubmit={handleSubmit} className={`${className}`} style={style}>
+            {clonedChildren}
+        </form>
     );
-}
-
-function areAllValuesSet(values: Record<string, string | null | undefined>) {
-    return Object.values(values).some(v => v !== null);
-}
-
-function resetValues(values: Record<string, string | null | undefined>) {
-    const resetValues: Record<string, null> = {};
-    for(let id in values)
-        values[id] = null;
-    
-    return resetValues;
-}
-
-
-function mockFn(): () => any {
-    const warnMsg = 'This is a mock function. Please check that u are using it inside the InputForm context Provider or that it is properly defined';
-    return () => { 
-        console.error(warnMsg);
-        return;
-    }
 }

@@ -16,11 +16,10 @@ function App() {
 
     let error = '';
     function handleSubmit(areErrors: boolean, values: Record<string, string | null | undefined>) {
-        if(!areErrors)
-            //setFormData(values);
-            error = 'Got values successfully';
+        if(areErrors)
+            alert(`Check the input form ${values}`);
 
-        error = 'Some errors occurred, please check the form';
+        setFormData(values);
     }
 
     function validateNotEmpty(id: string, value?: string) {
@@ -39,7 +38,7 @@ function App() {
                 <Input.Error />    
             </Input>
 
-            {/* <Input id="lastName" validationFn={validateNotEmpty}>
+            <Input id="lastName" validationFn={validateNotEmpty}>
                 <Input.Label text="Last Name *"/>
                 <Input.Field />
                 <Input.Error /> 
@@ -61,7 +60,7 @@ function App() {
                 <Input.Label text="Message *"/>
                 <Input.Field />
                 <Input.Error /> 
-            </Input> */}
+            </Input>
             <InputSubmit/>
         </InputForm>
     </div>

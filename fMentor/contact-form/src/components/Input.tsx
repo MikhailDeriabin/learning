@@ -1,16 +1,16 @@
 import {Properties} from "csstype";
-import { createContext, useContext, useState, ReactNode, useEffect, forwardRef } from 'react';
+import { createContext, useContext, useState, ReactNode, useEffect, forwardRef, useImperativeHandle, ForwardedRef } from 'react';
 import InputLabel from "./InputLabel";
 import InputError from "./InputError";
 import InputField from "./InputField";
 
-type Id = string;
-type Value = string | undefined;
-type Error = string | undefined;
-type TContextData = {
-    id: Id,
-    value: Value,
-    error: Error
+export type TInputId = string;
+export type TInputValue = string | undefined;
+export type TInputError = string | undefined;
+export type TContextData = {
+    id: TInputId,
+    value: TInputValue,
+    error: TInputError
 }
 const defaultContextData: TContextData = {
     id: 'Id field is not defined. Please define an id for the Input component',
@@ -19,10 +19,10 @@ const defaultContextData: TContextData = {
 }
 
 type TContextValue = {
-    validate?: (id: Id, value: Value) => string,
+    validate?: (id: TInputId, value: TInputValue) => string,
 
     handleBlur: () => any,
-    handleChange: (value: Value) => any
+    handleChange: (value: TInputValue) => any
 } & TContextData;
 
 const DefaultContextValue: TContextValue = {
@@ -42,22 +42,51 @@ export function useInputContext(){
     return ctx;
 }
 
+type ValidationFn = (id: TInputId, value: TInputValue) => string;
+export type InputRefMethods = {
+    getIdAndValue: () => [TInputId, TInputValue],
+    resetValue: () => void,
+    validate: () => string | undefined
+}
 type Props = {
-    onBlur?: (isError: boolean, id: Id, value: string) => any,
-    id: Id,
+    onBlur?: (isError: boolean, id: TInputId, value: string) => any,
+    id: TInputId,
 
-    validationFn?: (id: Id, value: Value) => string
+    validationFn?: ValidationFn
 
     className?: string,
     style?: Properties,
     children?: ReactNode
 }
-const InputRef = forwardRef<HTMLInputElement, Props>(
+const InputRef = forwardRef<InputRefMethods, Props>(
     ({id, onBlur, validationFn, className, style, children}, ref) => {
 
     const [contextData, setContextData] = useState<TContextData>({
         ...defaultContextData,
         id
+    });
+
+    useImperativeHandle(ref, () => {
+        return {
+            getIdAndValue: () => [id, contextData.value],
+            resetValue: () => setContextData({...contextData, value: undefined}),
+            validate: () => {
+                //Special value for error when validation fn is not defined
+                if(!validationFn)
+                    return undefined;
+
+                //If error already defined, do not call validation fn again
+                if(contextData.error)
+                    return contextData.error;
+
+                const error = validationFn(id, contextData.value);
+                if(!error)
+                    return '';
+
+                setContextData({...contextData, error})
+                return error;
+            }
+        }   
     });
 
     function handleBlur() {
@@ -70,7 +99,7 @@ const InputRef = forwardRef<HTMLInputElement, Props>(
         onBlur(false, id, contextData.value ?? '');
     }
 
-    function handleChange(value: Value) {
+    function handleChange(value: TInputValue) {
         if(!validationFn)
             return setContextData({value, error: undefined, id});
 
@@ -88,7 +117,7 @@ const InputRef = forwardRef<HTMLInputElement, Props>(
 
     return(
         <Context.Provider value={contextValue}>
-            <div className={`${className}`} style={style} data-input-type="Input">
+            <div className={`${className}`} style={style}>
                 {children}
             </div>
         </Context.Provider>

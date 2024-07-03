@@ -1,8 +1,10 @@
 import {Properties} from "csstype";
-import { createContext, useContext, useState, ReactNode, useEffect, forwardRef, useImperativeHandle, ForwardedRef } from 'react';
+import { createContext, useContext, useState, ReactNode, forwardRef, useImperativeHandle } from 'react';
 import InputLabel from "./InputLabel";
 import InputError from "./InputError";
 import InputField from "./InputField";
+import InputTextarea from "./InputTextarea";
+import InputToggle from './InputToggle';
 
 export type TInputId = string;
 export type TInputValue = string | undefined;
@@ -128,12 +130,16 @@ type InputCompound = typeof InputRef & {
     Label: typeof InputLabel;
     Field: typeof InputField;
     Error: typeof InputError;
+    Textarea: typeof InputTextarea,
+    InputToggle: typeof InputToggle
 };
 const Input = InputRef as InputCompound;
 
 Input.Label = InputLabel;
 Input.Field = InputField;
 Input.Error = InputError;
+Input.Textarea = InputTextarea;
+Input.InputToggle = InputToggle;
   
 export default Input;
 

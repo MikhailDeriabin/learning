@@ -52,13 +52,14 @@ function App() {
 
             <Input id="query" validationFn={validateNotEmpty}>
                 <Input.Label text="Query Type *"/>
-                <Input.Field />
+                <Input.InputToggle value='general' label='General Query'/>
+                <Input.InputToggle value='support' label='Support Request'/>
                 <Input.Error /> 
             </Input>
 
             <Input id="message" validationFn={validateNotEmpty}>
                 <Input.Label text="Message *"/>
-                <Input.Field />
+                <Input.Textarea />
                 <Input.Error /> 
             </Input>
             <InputSubmit/>

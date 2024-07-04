@@ -5,6 +5,7 @@ import InputError from "./InputError";
 import InputField from "./InputField";
 import InputTextarea from "./InputTextarea";
 import InputToggle from './InputToggle';
+import ToggleGroup from './ToggleGroup';
 
 export type TInputId = string;
 export type TInputValue = string | undefined;
@@ -131,7 +132,8 @@ type InputCompound = typeof InputRef & {
     Field: typeof InputField;
     Error: typeof InputError;
     Textarea: typeof InputTextarea,
-    InputToggle: typeof InputToggle
+    Toggle: typeof InputToggle,
+    ToggleGroup: typeof ToggleGroup
 };
 const Input = InputRef as InputCompound;
 
@@ -139,7 +141,8 @@ Input.Label = InputLabel;
 Input.Field = InputField;
 Input.Error = InputError;
 Input.Textarea = InputTextarea;
-Input.InputToggle = InputToggle;
+Input.Toggle = InputToggle;
+Input.ToggleGroup = ToggleGroup;
   
 export default Input;
 

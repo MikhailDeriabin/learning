@@ -1,6 +1,14 @@
 import { Properties } from 'csstype';
-import { useInputContext } from './Input';
-import { useState, MouseEvent } from 'react';
+import { TInputValue, useInputContext, TInputId } from './Input';
+import { forwardRef, useImperativeHandle, useState } from 'react';
+
+type THandleChangeFn = (value: TInputValue) => any;
+export type TInputToggleRef = {
+    readonly getId: () => TInputId,
+    readonly getValue: () => TInputValue,
+    readonly toggle: () => void,
+    readonly setHandleChange: (fn: THandleChangeFn) => void
+}
 
 type Props = {
     value: string,
@@ -8,18 +16,30 @@ type Props = {
     className?: string,
     style?: Properties
 }
-export default function InputToggle({className, style, value, label}: Props) {
-    const { id, handleChange } = useInputContext();
-    
+const InputToggle = forwardRef<TInputToggleRef, Props>(({className, style, value, label}, ref) => {
+    let { id, handleChange } = useInputContext();
     const [isSelected, setIsSelected] = useState<boolean>(false);
 
-    function handleToggle(e: MouseEvent<HTMLInputElement>) {
-        setIsSelected(!isSelected);
+    const toggleId = `${id}-${value}`;
+
+    useImperativeHandle(ref, () => {
+        return {
+            getId: () => toggleId,
+            getValue: () => isSelected ? value : undefined,
+            toggle: () => (setIsSelected(isSelected => !isSelected)),
+            setHandleChange: (fn: THandleChangeFn) => (handleChange = fn)
+        }
+    });
+
+    function handleToggle() {
+        !isSelected ? handleChange(value) : handleChange(undefined);
+        setIsSelected(isSelected => !isSelected);
     }
 
-    return(<div>
+    return(
+        <div>
             <input 
-                id={`${id}-${value}`}
+                id={toggleId}
                 value={value}
                 className={`${className}`}
                 style={style}
@@ -29,7 +49,8 @@ export default function InputToggle({className, style, value, label}: Props) {
                 checked={isSelected}
             />
             {label && <label htmlFor={`${id}-${value}`}>{label}</label>}
-    </div>
-        
+        </div>
     );
-}
+});
+
+export default InputToggle;

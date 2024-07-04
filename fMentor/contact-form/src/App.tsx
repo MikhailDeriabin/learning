@@ -16,8 +16,9 @@ function App() {
 
     let error = '';
     function handleSubmit(areErrors: boolean, values: Record<string, string | null | undefined>) {
+        console.log(values);
         if(areErrors)
-            alert(`Check the input form ${values}`);
+            return;
 
         setFormData(values);
     }
@@ -32,37 +33,41 @@ function App() {
     return (
     <div>
         <InputForm onSubmit={handleSubmit}>
-            <Input id="firstName" validationFn={validateNotEmpty}>
+            <Input id="firstName">
                 <Input.Label text="First Name *" />
                 <Input.Field />
                 <Input.Error />    
             </Input>
 
-            <Input id="lastName" validationFn={validateNotEmpty}>
-                <Input.Label text="Last Name *"/>
+            <Input id="lastName">
+                <Input.Label text="Last Name *" />
                 <Input.Field />
                 <Input.Error /> 
             </Input>
 
-            <Input id="email" validationFn={validateNotEmpty}>
-                <Input.Label text="Email Address *"/>
+            <Input id="email">
+                <Input.Label text="Email Address *" />
                 <Input.Field />
                 <Input.Error /> 
             </Input>
 
             <Input id="query" validationFn={validateNotEmpty}>
-                <Input.Label text="Query Type *"/>
-                <Input.InputToggle value='general' label='General Query'/>
-                <Input.InputToggle value='support' label='Support Request'/>
+                <Input.Label text="Query Type *" />
+                <Input.ToggleGroup maxSelected={1}>
+                    <Input.Toggle value='general' label='General Query' />
+                    <Input.Toggle value='support' label='Support Request' />
+                    <Input.Toggle value='notification' label='Notification' />
+                    <Input.Toggle value='error' label='Error Request' />
+                </Input.ToggleGroup>
                 <Input.Error /> 
             </Input>
 
-            <Input id="message" validationFn={validateNotEmpty}>
-                <Input.Label text="Message *"/>
+            <Input id="message" >
+                <Input.Label text="Message *" />
                 <Input.Textarea />
                 <Input.Error /> 
             </Input>
-            <InputSubmit/>
+            <InputSubmit />
         </InputForm>
     </div>
     )

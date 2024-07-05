@@ -1,4 +1,5 @@
 import { Properties } from 'csstype';
+import { useInputContext } from './Input';
 
 type Props = {
     text: string,
@@ -6,7 +7,9 @@ type Props = {
     style?: Properties
 }
 export default function InputLabel({text, className, style}: Props) {
+    const { id } = useInputContext();
+
     return(
-        <p className={`${className}`} style={style}>{text}</p>
+        <label htmlFor={`${id}-input-field`} className={`${className}`} style={style}>{text}</label>
     );
 }

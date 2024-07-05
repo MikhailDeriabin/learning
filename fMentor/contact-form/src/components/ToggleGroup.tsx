@@ -1,13 +1,13 @@
 import { Children, ReactElement, ReactNode, cloneElement, isValidElement, useRef } from "react";
 import InputToggle, { TInputToggleRef } from "./InputToggle";
-import { TInputValue, TInputId, useInputContext } from './Input';
+import { TInputId, useInputContext } from './Input';
 
 type Props = {
     readonly children?: ReactNode,
     readonly maxSelected: number
 }
 export default function ToggleGroup({ children, maxSelected }: Props) {
-    const {handleChange} = useInputContext();
+    const { handleChange } = useInputContext();
 
     const toggleButtons = useRef<Record<TInputId, TInputToggleRef>>({});
     const selectedCount = useRef<number>(0);
@@ -28,10 +28,18 @@ export default function ToggleGroup({ children, maxSelected }: Props) {
         return true;
     }
 
-    function handleToggle(id: TInputId, value: TInputValue) {
+    function handleToggle(id: TInputId, value: string | undefined) {
         //If toggle is de-selected no need for actions
-        if(!value)
+        if(!value){
+            let newValues: string[] = [];
+            for(let buttonId in toggleButtons.current){
+                const value = toggleButtons.current[buttonId].getValue();
+                if(buttonId !== id && value)
+                    newValues.push(value);
+            }
+            handleChange(newValues);
             return decreaseSelectedCount();
+        }
             
         //If max can be chosen is one act as a radio button group (change current value to the selected one)
         if(maxSelected === 1){
@@ -45,7 +53,7 @@ export default function ToggleGroup({ children, maxSelected }: Props) {
                     button.toggle();
             }
 
-            return handleChange(value);
+            return handleChange([value]);
         }
 
         const canIncreaseSelectedCount = increaseSelectedCount();
@@ -53,7 +61,14 @@ export default function ToggleGroup({ children, maxSelected }: Props) {
         if(!canIncreaseSelectedCount)
             return toggleButtons.current[id].toggle();
 
-        handleChange(value);
+        let newValues: string[] = [value];
+        for(let buttonId in toggleButtons.current){
+            const value = toggleButtons.current[buttonId].getValue();
+            if(buttonId !== id && value)
+                newValues.push(value);
+        }
+
+        handleChange(newValues);
     }
 
     const clonedElems = Children.map(children, child => {

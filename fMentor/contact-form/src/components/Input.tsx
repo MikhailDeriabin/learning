@@ -8,7 +8,7 @@ import InputToggle from './InputToggle';
 import ToggleGroup from './ToggleGroup';
 
 export type TInputId = string;
-export type TInputValue = string | undefined;
+export type TInputValue = string | string[] | undefined;
 export type TInputError = string | undefined;
 export type TContextData = {
     id: TInputId,
@@ -22,7 +22,7 @@ const defaultContextData: TContextData = {
 }
 
 type TContextValue = {
-    validate?: (id: TInputId, value: TInputValue) => string,
+    validate?: ((id: TInputId, value?: string) => string) | ((id: TInputId, value?: string[]) => string),
 
     handleBlur: () => any,
     handleChange: (value: TInputValue) => any
@@ -45,17 +45,18 @@ export function useInputContext(){
     return ctx;
 }
 
-type ValidationFn = (id: TInputId, value: TInputValue) => string;
+type ValidationFn = (id: TInputId, value: string | undefined) => string;
+type ValidationFnArray = (id: TInputId, value: string[] | undefined) => string;
 export type InputRefMethods = {
     getIdAndValue: () => [TInputId, TInputValue],
     resetValue: () => void,
     validate: () => string | undefined
 }
 type Props = {
-    onBlur?: (isError: boolean, id: TInputId, value: string) => any,
+    onBlur?: (isError: boolean, id: TInputId, value: TInputValue) => any,
     id: TInputId,
 
-    validationFn?: ValidationFn
+    validationFn?: ValidationFn | ValidationFnArray
 
     className?: string,
     style?: Properties,
@@ -82,7 +83,7 @@ const InputRef = forwardRef<InputRefMethods, Props>(
                 if(contextData.error)
                     return contextData.error;
 
-                const error = validationFn(id, contextData.value);
+                const error = validationFn(id, contextData.value as any);
                 if(!error)
                     return '';
 
@@ -106,7 +107,7 @@ const InputRef = forwardRef<InputRefMethods, Props>(
         if(!validationFn)
             return setContextData({value, error: undefined, id});
 
-        const error = validationFn(id, value);
+        const error = validationFn(id, value as any);
         setContextData(() => { return {value, error, id}});
     }
 

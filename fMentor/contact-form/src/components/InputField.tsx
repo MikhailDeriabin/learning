@@ -14,6 +14,6 @@ export default function InputField({className, style}: Props) {
     }
 
     return(
-        <input id={id} value={value ?? ''} onChange={handleInputChange} className={`${className}`} style={style} onBlur={handleBlur}/>
+        <input id={`${id}-input-field`} value={value ?? ''} onChange={handleInputChange} className={`${className}`} style={style} onBlur={handleBlur}/>
     );
 }

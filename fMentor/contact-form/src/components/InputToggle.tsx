@@ -1,11 +1,11 @@
 import { Properties } from 'csstype';
-import { TInputValue, useInputContext, TInputId } from './Input';
+import { useInputContext, TInputId } from './Input';
 import { forwardRef, useImperativeHandle, useState } from 'react';
 
-type THandleChangeFn = (value: TInputValue) => any;
+type THandleChangeFn = (value: string | undefined) => any;
 export type TInputToggleRef = {
     readonly getId: () => TInputId,
-    readonly getValue: () => TInputValue,
+    readonly getValue: () => string | undefined,
     readonly toggle: () => void,
     readonly setHandleChange: (fn: THandleChangeFn) => void
 }
@@ -13,10 +13,11 @@ export type TInputToggleRef = {
 type Props = {
     value: string,
     label?: string,
+    type?: 'radio' | 'checkbox',
     className?: string,
     style?: Properties
 }
-const InputToggle = forwardRef<TInputToggleRef, Props>(({className, style, value, label}, ref) => {
+const InputToggle = forwardRef<TInputToggleRef, Props>(({className, style, value, label, type}, ref) => {
     let { id, handleChange } = useInputContext();
     const [isSelected, setIsSelected] = useState<boolean>(false);
 
@@ -27,7 +28,7 @@ const InputToggle = forwardRef<TInputToggleRef, Props>(({className, style, value
             getId: () => toggleId,
             getValue: () => isSelected ? value : undefined,
             toggle: () => (setIsSelected(isSelected => !isSelected)),
-            setHandleChange: (fn: THandleChangeFn) => (handleChange = fn)
+            setHandleChange: (fn: THandleChangeFn) => (handleChange = fn as any)
         }
     });
 
@@ -43,7 +44,7 @@ const InputToggle = forwardRef<TInputToggleRef, Props>(({className, style, value
                 value={value}
                 className={`${className}`}
                 style={style}
-                type="radio"
+                type={type ?? 'checkbox'}
                 onChange={()=>{}}
                 onClick={handleToggle}
                 checked={isSelected}

@@ -1,4 +1,4 @@
-import { getStringInfo, toUpperCase } from '../app/Util';
+import { getStringInfo, toUpperCase } from '../../app/Util';
 
 //This is a test suit
 describe('Utils.ts test suit', () => {
@@ -30,8 +30,7 @@ describe('Utils.ts test suit', () => {
         });
     });
 
-
-
+    
     //This is not the best way to write test, because if it fails, hard to understand why exactly
     it('should return right info object for a valid string', () => {
         //arrange:

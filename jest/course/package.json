@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "echo run 1 time && jest",
+    "test-w": "echo watch for files changes && jest --watch"
   },
   "keywords": [],
   "author": "",

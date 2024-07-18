@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo run 1 time && jest",
-    "test-w": "echo watch for files changes && jest --watch"
+    "test-w": "echo watch for files changes && jest --watch",
+    "server_app": "ts-node src/server_app/Launcher.ts"
   },
   "keywords": [],
   "author": "",

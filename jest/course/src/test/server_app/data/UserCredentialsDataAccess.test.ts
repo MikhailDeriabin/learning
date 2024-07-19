@@ -5,8 +5,6 @@ import { Account } from "../../../server_app/model/AuthModel";
 const insertMock = jest.fn();
 const getByMock = jest.fn();
 
-//TODO: write tests for all other classes in the data folder
-
 //Mocking a consumer class, since it is not injected into the constructor
 //and we want to control the implementation of it
 //The DataBase is constructor function name, so we are mocking the whole class implementation (its constructor function)

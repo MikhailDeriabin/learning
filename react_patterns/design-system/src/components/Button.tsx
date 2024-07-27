@@ -11,6 +11,7 @@ export const Button = styled.button<Props>`
 
     color: ${text.contrast};
     transition: background-color 0.3s linear, color 0.3 linear;
+    cursor: pointer;
 
     &:hover{
         background-color: ${primary[200]};

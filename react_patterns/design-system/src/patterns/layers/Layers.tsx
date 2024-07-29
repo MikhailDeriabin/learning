@@ -13,8 +13,8 @@ export const Layers = styled.div<LayersProps>`
 
 const SubscribeForm = () => {
   return (
-    <Layers gutter="xl">
-      <Layers gutter="m">
+    <Layers gutter="m">
+      <Layers gutter="s">
         <h2>Subscribe To Newsletter</h2>
         <p>
           Subscribe to the newsletter to receive updates about new products and

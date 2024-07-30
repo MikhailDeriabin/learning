@@ -3,7 +3,7 @@ import { Gutter, spaceSchema } from "../../common/spaces";
 
 //Basically with this u can simply choose the space u need s, l, xl etc. and just wrap your components with it. 
 //So that u can use the same spaces across your app, also u do not have to repeat adding margins gaps etc. for each component
-type LayersProps = {
+export type LayersProps = {
   gutter?: Gutter;
 }
 export const Layers = styled.div<LayersProps>`

@@ -11,7 +11,7 @@ export const justifySchema: Record<Justify, string> = {
   center: "center",
 }
 
-type InlineBundleProps = {
+export type InlineBundleProps = {
   gutter?: Gutter,
   justify?: Justify,
   align?: Justify

@@ -9,7 +9,7 @@ type GridProps = {
     gutter?: Gutter,
     columnSize?: string
 }
-const Grid = styled.div<GridProps>`
+export const Grid = styled.div<GridProps>`
     display: grid;
     gap: ${({gutter}) => gutter ? spaceSchema[gutter] : spaceSchema.l};
     //minmax is saying to browser the min width of a column and max width of it

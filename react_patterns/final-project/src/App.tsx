@@ -1,12 +1,14 @@
 import { GlobalStyles } from "./common/GlobalStyles";
-import { Button } from "./components/Button";
-
+import { IconButton, PrimaryButton } from "./components/Button";
+import profile from './assets/profile.svg'
+import { ColorType } from "./common";
+import NavBarLink from "./components/NavBarLink";
 
 export default function App() {
 
     return (
         <>
-        <Button>Click me</Button>
+            <NavBarLink>Overview</NavBarLink>
             <GlobalStyles/>
         </>
     )

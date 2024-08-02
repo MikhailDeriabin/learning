@@ -1,4 +1,8 @@
 /**
+ * Color theme
+ */
+export type ColorTheme = 'light' | 'dark';
+/**
  * Enum containing different color styles, which can be found from the global color object.
  * Can be used for assembling color themes of components
  */

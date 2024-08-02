@@ -2,8 +2,9 @@ import styled from "styled-components"
 import { border, color, space } from "../common";
 import { ReactNode } from "react";
 import { Pad } from "./Pad";
+import { Center } from "./Center";
 
-//TODO: next add Center pattern to center text
+
 const LinkWrapper = styled(Pad).attrs(() => ({padding: [3]}))`
     background-color: ${color.neutral[200]};
     border-radius: ${border.radius.normal};
@@ -19,7 +20,9 @@ type Props = {
 export default function NavBarLink({ children }: Props) {
     return(
         <LinkWrapper>
-            <Link>{children}</Link>
+            <Center centerChildren={true} centerText={true}>
+                <Link>{children}</Link>
+            </Center>
         </LinkWrapper>
     );
 }

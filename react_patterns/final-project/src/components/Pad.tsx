@@ -9,7 +9,7 @@ export const Pad = styled.div<Props>`
         if(!padding)
             return 'inherit';
 
-        const paddings = (typeof padding === 'string' ? padding.split(' ') : padding) as Space[];
+        const paddings = (typeof padding === 'number' ? [padding] : padding) as Space[];
         return paddings.map((p) => space[p]).join(' ');
     }}
 `;

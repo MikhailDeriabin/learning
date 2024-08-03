@@ -34,16 +34,16 @@ export const Button = styled.button`
 
 type PrimaryButtonProps = {
     size?: Size,
-    bgColor?: ColorType.primary | ColorType.success | ColorType.error | ColorType.alert;
+    type?: ColorType.primary | ColorType.success | ColorType.error | ColorType.alert;
 } & ButtonHTMLAttributes<HTMLButtonElement>
 export const PrimaryButton = styled(Button)<PrimaryButtonProps>`
     ${({size}) => getPrimaryButtonSizeStyles(size ?? 'm')}
 
-    ${({bgColor}) => getPrimaryButtonColorStyles(bgColor ?? ColorType.primary)}
+    ${({type: bgColor}) => getPrimaryButtonColorStyles(bgColor ?? ColorType.primary)}
 `;
 
-function getPrimaryButtonColorStyles(theme: ColorType.primary | ColorType.success | ColorType.error | ColorType.alert) {
-    switch (theme) {
+function getPrimaryButtonColorStyles(type: ColorType.primary | ColorType.success | ColorType.error | ColorType.alert) {
+    switch (type) {
         case ColorType.success:
             return `
                 background-color: ${color.success[100]};

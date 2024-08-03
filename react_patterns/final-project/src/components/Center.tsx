@@ -2,7 +2,8 @@ import styled from "styled-components"
 
 type Props = {
     centerText?: boolean,
-    centerChildren?: boolean
+    centerVertical?: boolean,
+    centerHorizontal?: boolean
 }
 export const Center = styled.div<Props>`
     margin-inline-start: auto;
@@ -10,9 +11,13 @@ export const Center = styled.div<Props>`
 
     ${({centerText}) => (centerText && 'text-align: center;')}
 
-    ${({centerChildren}) => (centerChildren && `
+    ${({centerVertical}) => (centerVertical && `
         display: flex;
         align-items: center;
+    `)}
+
+    ${({centerHorizontal}) => (centerHorizontal && `
+        display: flex;
         justify-content: center;
     `)}
 `;

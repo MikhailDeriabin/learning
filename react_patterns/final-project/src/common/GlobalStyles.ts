@@ -7,6 +7,8 @@ export const GlobalStyles = createGlobalStyle`
         font-family: ${font.family};
         font-weight: ${font.weight.normal};
         box-sizing: border-box;
+        padding: 0;
+        margin: 0;
     }
 
     *, *:before, *:after{

@@ -1,7 +1,6 @@
 import styled, { CSSProperties } from "styled-components"
 import { border, color, ColorTheme, ColorType, font, Size, space } from "../common";
 import { Children, cloneElement, InputHTMLAttributes, isValidElement, ReactElement, ReactNode } from "react";
-import { Layers } from "./Gutter";
 
 
 const InputField = styled.input`

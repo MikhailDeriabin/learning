@@ -7,13 +7,14 @@ import passwordImg from '../assets/password-key.svg';
 import notificationImg from '../assets/notification.svg';
 import billingImg from '../assets/billing.svg';
 import integrationImg from '../assets/integration.svg';
+import { border, color } from "../common";
 
 type Props = {
 
 } & HTMLAttributes<HTMLDivElement>;
 export default function MainMenu({...props}: Props) {
     return(
-        <div {...props}>
+        <div style={{borderRight: `${border.width[2]} solid ${color.neutral[100]}`}} {...props}>
             <Layers space={1}>
                 <MainMenuLink text="Profile" iconPath={profileImg} isActive/>
                 <MainMenuLink text="Account" iconPath={accountImg} />

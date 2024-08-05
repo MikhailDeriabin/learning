@@ -39,7 +39,7 @@ type PrimaryButtonProps = {
 export const PrimaryButton = styled(Button)<PrimaryButtonProps>`
     ${({size}) => getPrimaryButtonSizeStyles(size ?? 'm')}
 
-    ${({type: bgColor}) => getPrimaryButtonColorStyles(bgColor ?? ColorType.primary)}
+    ${({type}) => getPrimaryButtonColorStyles(type ?? ColorType.primary)}
 `;
 
 function getPrimaryButtonColorStyles(type: ColorType.primary | ColorType.success | ColorType.error | ColorType.alert) {

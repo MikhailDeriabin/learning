@@ -4,10 +4,16 @@ import { ReactNode } from "react";
 import { Pad } from "./Pad";
 import { Center } from "./Center";
 
-
-const LinkWrapper = styled(Pad).attrs(() => ({padding: [3]}))`
-    background-color: ${color.neutral[200]};
+type LinkWrapperProps = {
+    isActive?: boolean
+}
+const LinkWrapper = styled(Pad).attrs(() => ({padding: [3]}))<LinkWrapperProps>`
+    background-color: ${({isActive}) => isActive ? color.neutral[200] : '#FFFFFF00'};
     border-radius: ${border.radius.normal};
+
+    &:hover{
+        background-color: ${color.neutral[300]}; 
+    }
 `;
 
 const Link = styled.a`
@@ -15,12 +21,13 @@ const Link = styled.a`
 `;
 
 type Props = {
-    children?: ReactNode;
+    children?: ReactNode,
+    isActive?: boolean
 }
-export default function NavBarLink({ children }: Props) {
+export default function NavBarLink({ children, isActive }: Props) {
     return(
-        <LinkWrapper>
-            <Center centerChildren={true} centerText={true}>
+        <LinkWrapper isActive={isActive}>
+            <Center centerHorizontal centerVertical centerText>
                 <Link>{children}</Link>
             </Center>
         </LinkWrapper>

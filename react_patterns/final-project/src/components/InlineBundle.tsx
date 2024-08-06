@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { space as spaceSchema, Space } from "../common";
 
-type Justify = 'flex-start' | 'center' | 'flex-end';
+type Justify = 'flex-start' | 'center' | 'flex-end' | 'space-around' | 'space-between';
 type Props = {
     space?: Space,
     justify?: Justify,

@@ -21,7 +21,7 @@ function getHeaderColorStyles(theme: ColorTheme, type: ColorType){
         case ColorType.alert:
             return basicStyles + `color: ${color.alert[100]};`
         default:
-           return basicStyles + theme === 'dark' ? `color: ${color.text.contrast};` : `color: ${color.text.normal};`
+           return basicStyles + (theme === 'dark' ? `color: ${color.text.contrast};` : `color: ${color.text.normal};`)
     }
 }
 

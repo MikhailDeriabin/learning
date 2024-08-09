@@ -1,11 +1,11 @@
 import Link from "next/link";
+import { Header } from "../components/Header";
 
 //This is a server-rendered component
 export default function Home() {
     return (
         <main>
-            <img src="/logo.png" alt="A server surrounded by magic sparkles." />
-            <h1>Welcome to this NextJS Course!</h1>
+            <Header />
             <p>🔥 Let&apos;s get started! 🔥</p>
             {/* This will get us to another page and the it will be downloaded from the server => not SPA */}
             <a href="/about">About us</a>

@@ -4,11 +4,15 @@ import "./globals.css";
 
 //Layout is also a special type of file, which is a shell for pages = pages will be rendered inside the layout
 
-//Some reserved file names of NextJS:
+//Some reserved file names of NextJS for app folder:
 // - layout
 // - page
 // - global.css global styles (directly in /app)
 // - icon favicon and browser page icon (directly in /app)
+// - not-found
+// - error
+// - loading
+// - route (returns some data not page)
 
 const inter = Inter({ subsets: ["latin"] });
 

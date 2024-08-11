@@ -4,8 +4,9 @@ export type Meal = {
     id: number,
     title: string,
     slug: string,
-    image: string | StaticImport, 
+    image: string, 
     summary: string, 
     creator: string,
-    instructions: string
+    instructions: string,
+    creator_email: string
 }

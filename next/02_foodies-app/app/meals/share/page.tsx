@@ -1,9 +1,9 @@
 import ImagePicker from '@/components/images/ImagePicker';
 import classes from './page.module.css';
 import { saveMeal } from '@/apiController/formActions';
+import SubmitButton from '@/components/buttons/SubmitButton';
 
 export default function ShareMealPage() {
-
   return (
     <>
       <header className={classes.header}>
@@ -43,7 +43,7 @@ export default function ShareMealPage() {
           </p>
           <ImagePicker id='food-image' label='Choose image' />
           <p className={classes.actions}>
-            <button type="submit">Share Meal</button>
+            <SubmitButton>Share Meal</SubmitButton>
           </p>
         </form>
       </main>

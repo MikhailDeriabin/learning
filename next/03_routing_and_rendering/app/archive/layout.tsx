@@ -6,10 +6,10 @@ import { ReactNode } from "react";
 //where one page could be just a static page and another have some dynamic functionality.
 //Or you can conditionally show some specific page based on some factors
 type Props = Readonly<{
-    archive?: ReactNode,
-    latest?: ReactNode
+    archive: ReactNode,
+    latest: ReactNode
 }>;
-export default function ArchiveLayout({archive, latest}: Props) {
+export default function ArchiveLayout({ archive, latest }: Props) {
     return(
         <div>
             <section id="archive-filter">

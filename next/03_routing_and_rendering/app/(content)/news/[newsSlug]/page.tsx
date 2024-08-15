@@ -1,4 +1,5 @@
 import { DUMMY_NEWS } from "@/dummy-news";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 type Props = {
@@ -20,7 +21,10 @@ export default function NewsDetailsPage({params}:Props) {
     return(
         <article className="news-article">
             <header>
-                <img src={`/images/news/${pageNews.image}`} alt={pageNews.title}/>
+                <Link href={`/news/${pageNews.slug}/image`}>
+                    <img src={`/images/news/${pageNews.image}`} alt={pageNews.title}/>
+                </Link>
+                
                 <h1>{pageNews.title}</h1>
                 <time>{pageNews.date}</time>
             </header>

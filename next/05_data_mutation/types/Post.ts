@@ -4,7 +4,9 @@ export type Post = {
     title: string,
     content: string,
     createdAt: string,
-    userFirstName: string
+    userFirstName: string,
+    isLiked: boolean,
+    likes: number
 }
 
 export type CreatePost = {

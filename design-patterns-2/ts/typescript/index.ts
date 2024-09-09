@@ -1,4 +1,4 @@
 import Runner from "./patterns/builder/Runner";
 
-const s = new Runner();
-s.run();
+const program = new Runner();
+program.run(2);

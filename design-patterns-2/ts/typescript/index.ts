@@ -1,4 +1,4 @@
-import Runner from "./patterns/builder/Runner";
+import Runner from "./patterns/factories/abstractFactory/Runner";
 
 const program = new Runner();
-program.run(2);
+program.run(1);

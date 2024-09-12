@@ -1,5 +1,4 @@
-﻿using csharp.patterns;
-using csharp.patterns.builder;
+﻿using csharp.patterns.factories.innerFactory;
 
 namespace csharp;
 
@@ -8,7 +7,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        IRunner runner = new Runner();
-        runner.Run(3);
+        var runner = new Runner();
+        runner.Run(1);
     }
 }

@@ -1,4 +1,4 @@
-﻿using csharp.patterns.factories.innerFactory;
+﻿using csharp.patterns.factories.abstractFactory;
 
 namespace csharp;
 

@@ -14,7 +14,8 @@ class Point
     private double x, y;
 
     /// <summary>
-    /// Inner factory
+    /// Inner factory.
+    /// One of the ideas of the factory pattern is that client code does not call the constructor
     /// </summary>
     public static class Factory
     {

@@ -1,4 +1,4 @@
-﻿using csharp.patterns.factories.abstractFactory;
+﻿using csharp.patterns.adapter;
 
 namespace csharp;
 

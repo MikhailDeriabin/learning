@@ -1,4 +1,4 @@
-﻿using csharp.patterns.adapter;
+﻿using csharp.patterns.bridge;
 
 namespace csharp;
 

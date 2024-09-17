@@ -1,4 +1,4 @@
-import Runner from "./patterns/bridge/Runner";
+import Runner from "./patterns/decorator/Runner";
 
 const program = new Runner();
-program.run(2);
+program.run(1);

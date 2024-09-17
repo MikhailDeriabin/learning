@@ -1,7 +1,7 @@
 package org.patterns;
 
 import org.patterns.patterns.IRunner;
-import org.patterns.patterns.bridge.Runner;;
+import org.patterns.patterns.decorator.*;
 
 public class App {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-﻿using csharp.patterns.decorator;
+﻿using csharp.patterns.composite;
 
 namespace csharp;
 

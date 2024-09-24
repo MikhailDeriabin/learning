@@ -1,4 +1,4 @@
-﻿using csharp.patterns.facade;
+﻿using csharp.patterns.proxy;
 
 namespace csharp;
 

@@ -1,24 +1,9 @@
 ﻿namespace leetcode.s20;
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 public class Runner
 {
-    Dictionary<char, string> _openBrackets = new()
-    {
-        { '(', "0" },
-        { '[', "1" },
-        { '{', "2" }
-    };
-
-    Dictionary<char, string> _closedBrackets = new()
-    {
-        { ')', "0" },
-        { ']', "1" },
-        { '}', "2" }
-    };
 
     public bool IsValid(string s)
     {
@@ -29,30 +14,22 @@ public class Runner
         if (charsCount == 0 || charsCount % 2 != 0)
             return false;
 
-        var foundOpenBrackets = "";
-        var foundClosedBrackets = "";
+        var open = new Stack<int>();
 
         for (var i = 0; i < charsCount; i++)
         {
             var currentChar = chars[i];
-            
-            if(isOpenBracket(currentChar))
-                foundOpenBrackets += _openBrackets[currentChar];
-            
-            if(isClosedBracket(currentChar))
-                foundClosedBrackets += _closedBrackets[currentChar];
-        }
-        
-        return foundOpenBrackets == foundClosedBrackets;
-    }
 
-    private bool isOpenBracket(char character)
-    {
-        return character == '(' || character == '[' || character == '{';
-    }
-    
-    private bool isClosedBracket(char character)
-    {
-        return character == ')' || character == ']' || character == '}';
+            if (currentChar == '(')
+                open.Push(')');
+            else if (currentChar == '{')
+                open.Push('}');
+            else if (currentChar == '[')
+                open.Push(']');
+            else if (open.Count == 0 || open.Pop() != currentChar)
+                return false;
+        }
+
+        return open.Count == 0;
     }
 }
